@@ -1,7 +1,7 @@
 # MAUniSeqs
 > Metagenomic Analysis pipeline at UniSeq
 
-This pipeline is for the analysis of Illumina reads.
+This pipeline is for the analysis of metagenomic Illumina sequencing.
 
 
 ## Pipeline overview
