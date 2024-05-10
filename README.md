@@ -12,10 +12,13 @@ This pipeline is for the analysis of metagenomic Illumina sequencing.
 
 ## Installation
 
-Linux:
+It's encourage to use a conda/mamba enviroment.
 
-```sh
-npm install my-crazy-module --save
+For Linux:
+
+```
+git clone https://github.com/juanjo255/MAUS.git
+mamba create -n MAUS -c bioconda fastp kraken2 bracken 
 ```
 
 ## Usage example
