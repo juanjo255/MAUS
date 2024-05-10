@@ -1,0 +1,3 @@
+[submodule "KrakenTools"]
+	path = KrakenTools
+	url = https://github.com/jenniferlu717/KrakenTools.git
