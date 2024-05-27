@@ -1,5 +1,5 @@
 # MAUS
-> Metagenomic Analysis UniSeq (MAUS)
+> Metagenomic Analysis UniSeqs (MAUS)
 
 This pipeline is for the analysis of metagenomic Illumina sequencing.
 
