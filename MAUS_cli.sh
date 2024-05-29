@@ -109,7 +109,8 @@ fastp_preprocess (){
 
 ## Kraken2 classification
 Kraken2_class (){
-    kraken2 --threads $threads --db $kraken2_db $input_R1_file $input_R2_file 
+    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1$prefix2".kraken2_report" --report-minimizer-data \
+        --output $wd$prefix1$prefix2"kraken2_output" $input_R1_file $input_R2_file 
 }
 
 
