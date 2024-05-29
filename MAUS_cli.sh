@@ -2,6 +2,8 @@
 
 fastp_options=" "
 wd="./MAUS_result/"
+prefix1=""
+prefix2=""
 
 MAUS_help() {
     echo "
@@ -67,6 +69,20 @@ else
     wd=$wd"/"$output_dir
 fi
 
+## PREFIX name to use for the resulting files
+if [ -z $prefix1 ];
+then 
+    prefix1=$(basename $input_R1_file)
+    prefix1=${prefix1%%.*}
+fi
+
+## PREFIX name to use for the resulting files
+if [ -z $prefix2 ];
+then 
+    prefix2=$(basename $input_R2_file)
+    prefix2=${prefix2%%.*}
+fi
+
 
 #### FUNCTIONS FOR PIPELINE ####
 
@@ -80,14 +96,14 @@ fastp_preprocess (){
     echo "**** Quality filter with fastp *****"
     echo " "
     echo "FastP options: $fastp_options"
-    fastp -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$input_R1_file".fastp" -O $wd$input_R2_file".fastp"
+    fastp -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" -j $wd$prefix2".html" -h $wd$prefix2".json"
 }
 
 
 ## PIPELINE
 
 ## Check if output directory exists
-if [ -d /path/to/directory ]; 
+if [ -d $wd ];
 then
   echo "Directory exists."
 else 

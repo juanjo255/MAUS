@@ -1,0 +1,15 @@
+Este es el registro de lo utlimo hecho y proximo por hacer. Me servira para tener registro del dia a dia.
+
+* PARA CONSIDERAR
+Esta parte son cosas que podria hacer en el futuro que no son demandadas por ahora
+1. Agregar en el help opciones comunes, por ejemplo, para FastP agregar la opcion de cortar un numero de nucleotidos por delante 
+
+* REGISTROS
+
+2024-05-29
+
+* HECHO
+1. FastP funciona perfectamente y el usuario puede agregar las opciones que desee a fastp con -f.
+2. Empece a agregar a Kraken2
+
+
