@@ -23,16 +23,31 @@ mamba create -n MAUS -c bioconda fastp kraken2 bracken krona
 
 ## Usage example
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+* For help message
+  ```
+  ./MAUS_cli.sh -h
+  ```
+  
+  ```
+    Options:
+        -1        Input R1 paired end file. [required].
+        -2        Input R2 paired end file. [required].
+        -d        Database for kraken. if you do not have one, create one before using this pipeline. [required].
+        -n        Build kraken2 and Bracken database (Use with -g for library download). [False].
+        -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core. [kraken2 standard].
+        -t        Threads. [4].
+        -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
+        -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
+        -f        FastP options. [\" \"].
+        -l        Read length (Bracken). [100].
+        -c        Classification level (Bracken) [options: D,P,C,O,F,G,S,S1,etc]. [F]
+        -s        Threshold before abundance estimation (Bracken). [0].
+        -k        kmer length. (Kraken2,Bracken).[35]
 
-_For more examples and usage, please refer to the [Wiki][wiki]._
-
+        *         Help.
+  
+  ```
 
 ## Meta
 
-Your Name – [@YourTwitter](https://twitter.com/dbader_org) – YourEmail@example.com
-
-Distributed under the XYZ license. See ``LICENSE`` for more information.
-
-[https://github.com/yourname/github-link](https://github.com/dbader/)
-
+Juanpicon255 – [@YourTwitter](https://x.com/Juanpicon255) – piconcossio@gmail.com

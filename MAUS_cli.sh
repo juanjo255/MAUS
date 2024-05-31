@@ -28,7 +28,7 @@ MAUS_help() {
         -2        Input R2 paired end file. [required].
         -d        Database for kraken. if you do not have one, create one before using this pipeline. [required].
         -n        Build kraken2 and Bracken database (Use with -g for library download). [False].
-        -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core]. [kraken2 standard].
+        -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core. [kraken2 standard].
         -t        Threads. [4].
         -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
