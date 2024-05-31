@@ -8,6 +8,9 @@ fastp_options=""
 read_len=100
 classification_level="F"
 threshold_abundance=0
+kmer_len=35
+build_db=0
+libraries="bacteria,archaea,viral,human,UniVec_Core"
 
 MAUS_help() {
     echo "
@@ -24,19 +27,22 @@ MAUS_help() {
         -1        Input R1 paired end file. [required].
         -2        Input R2 paired end file. [required].
         -d        Database for kraken. if you do not have one, create one before using this pipeline. [required].
+        -n        Build kraken2 and Bracken database (Use with -g for library download). [False].
+        -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core]. [kraken2 standard].
         -t        Threads. [4].
         -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
         -f        FastP options. [\" \"].
         -l        Read length (Bracken). [100].
         -c        Classification level (Bracken) [options: D,P,C,O,F,G,S,S1,etc]. [F]
-        -s        Threshold before abundance estimation (Bracken). [0]. 
+        -s        Threshold before abundance estimation (Bracken). [0].
+        -k        kmer length. (Kraken2,Bracken).[35]
 
         *         Help.
     "
     exit 1
 }
-while getopts '1:2:d:t:w:z:f:l:c:s:' opt; do
+while getopts '1:2:d:ng:t:w:z:f:l:c:s:k:' opt; do
     case $opt in
         1)
         input_R1_file=$OPTARG
@@ -46,6 +52,12 @@ while getopts '1:2:d:t:w:z:f:l:c:s:' opt; do
         ;;
         d)
         kraken2_db=$OPTARG
+        ;;
+        n)
+        build_db=1
+        ;;
+        g)
+        libraries=$OPTARG
         ;;
         t)
         threads=$OPTARG
@@ -67,6 +79,9 @@ while getopts '1:2:d:t:w:z:f:l:c:s:' opt; do
         ;;
         s)
         threshold_abundance=$OPTARG
+        ;;
+        k)
+        kmer_len=$OPTARG
         ;;
         *)
         MAUS_help
@@ -122,21 +137,51 @@ fastp_preprocess (){
 }
 
 kraken2_build_db (){
-    k2 download-taxonomy --db $kraken2_db
+    echo "**** Downloading required files for kraken2 database *****"
+    echo " "
+
+    ## Download taxonomy
+    if [ -f $kraken2_db"/taxonomy/nucl_gb.accession2taxid" ] || [ -f $kraken2_db"/taxonomy/nucl_wgs.accession2taxid" ]; then
+        echo "Taxonomy files exist"
+    else
+        k2 download-taxonomy --db $kraken2_db
+    fi
+
+    ## Download libraries
+    k2 download-library --db $kraken2_db --library $libraries && kraken2-build --build --db $kraken2_db --threads $threads
     
+}
+## bracken build database
+bracken_build_db (){
+    echo "**** Building Bracken database *****"
+    echo " "
+    bracken-build -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean
+    echo " "
+    echo "**** Unneeded files were removed *****"
+    echo " "
 }
 
 ## Kraken2 classification
-Kraken2_class (){
-    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1$prefix2".kraken2_report" --report-minimizer-data \
-        --output $wd$prefix1$prefix2"kraken2_output" $input_R1_file $input_R2_file 
+Kraken2_classification (){
+    echo "**** Read classification with Kraken2 *****"
+    echo " "
+    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1$prefix2".kraken2_report" --report-minimizer-data --use-mpa-style \
+        --output $wd$prefix1$prefix2".kraken2_output" $input_R1_file $input_R2_file 
 }
 
-
-## bracke abundance estimation
-
+## bracken abundance estimation
 bracken_estimation (){
-    bracken -d $kraken2_db -i $wd$prefix1$prefix2".kreport" -o $wd$prefix1$prefix2".bracken" -r $read_len -l $classification_level -t ${THRESHOLD}
+    echo "**** Abundance estimation with Bracken *****"
+    echo " "
+    bracken -d $kraken2_db -i $wd$prefix1$prefix2".kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \ 
+        -o $wd$prefix1$prefix2".bracken_output"
+}
+
+krona_plot (){
+    echo "**** Plotting kraken2 results with Krona *****"
+    echo " "
+    ln -s /path/on/big/disk/taxonomy /home/genmol1/miniforge3/envs/MAUS/opt/krona/taxonomy
+    ktImportTaxonomy -t 5 -m 3 -o $wd$prefix1$prefix2".krona.html" $wd$prefix1$prefix2".kraken2_report"  
 }
 
 
@@ -145,9 +190,16 @@ bracken_estimation (){
 ## Check if output directory exists
 if [ -d $wd ];
 then
-  echo "Directory exists."
+    echo "Directory exists."
 else 
     create_wd
 fi
 
-#fastp_preprocess
+if [ $build_db -eq 1 ];
+then
+    echo "**** Building databases for kraken2 and Bracken *****"
+    echo " " 
+    kraken2_build_db && bracken_build_db
+fi
+
+#fastp_preprocess && Kraken2_classification && bracken_estimation

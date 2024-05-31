@@ -18,7 +18,7 @@ For Linux:
 
 ```
 git clone https://github.com/juanjo255/MAUS.git
-mamba create -n MAUS -c bioconda fastp kraken2 bracken 
+mamba create -n MAUS -c bioconda fastp kraken2 bracken krona 
 ```
 
 ## Usage example
