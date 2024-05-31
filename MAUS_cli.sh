@@ -5,6 +5,9 @@ prefix1=""
 prefix2=""
 threads=4
 fastp_options=""
+read_len=100
+classification_level="F"
+threshold_abundance=0
 
 MAUS_help() {
     echo "
@@ -25,12 +28,15 @@ MAUS_help() {
         -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
         -f        FastP options. [\" \"].
-        
+        -l        Read length (Bracken). [150].
+        -c        Classification level (Bracken) [options: D,P,C,O,F,G,S,S1,etc]. [F]
+        -s        Threshold before abundance estimation (Bracken). [0]. 
+
         *         Help.
     "
     exit 1
 }
-while getopts '1:2:d:t:w:z:f:' opt; do
+while getopts '1:2:d:t:w:z:f:l:c:s:' opt; do
     case $opt in
         1)
         input_R1_file=$OPTARG
@@ -106,6 +112,10 @@ fastp_preprocess (){
     fastp --thread $threads -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" -j $wd$prefix2".html" -h $wd$prefix2".json"
 }
 
+kraken2_build_db (){
+    k2 download-taxonomy --db $kraken2_db
+    
+}
 
 ## Kraken2 classification
 Kraken2_class (){
@@ -113,6 +123,12 @@ Kraken2_class (){
         --output $wd$prefix1$prefix2"kraken2_output" $input_R1_file $input_R2_file 
 }
 
+
+## bracke abundance estimation
+
+bracken_estimation (){
+    bracken -d $kraken2_db -i $wd$prefix1$prefix2".kreport" -o $wd$prefix1$prefix2".bracken" -r $read_len -l $classification_level -t ${THRESHOLD}
+}
 
 
 ## PIPELINE
