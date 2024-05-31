@@ -15,6 +15,11 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 3. Se terminó Bracken 
 4. Se agregó Krona para visualizar los resultados
 
+* CONTINUAR
+1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan dsponibles
+2. Probar el pipeline completo
+3. Terminar de agregar Krona
+
 2024-05-30
 
 * HECHO
