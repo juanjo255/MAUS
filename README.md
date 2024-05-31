@@ -50,4 +50,4 @@ mamba create -n MAUS -c bioconda fastp kraken2 bracken krona
 
 ## Meta
 
-Juanpicon255 – [@YourTwitter](https://x.com/Juanpicon255) – piconcossio@gmail.com
+[@Juanpicon255](https://x.com/Juanpicon255)
