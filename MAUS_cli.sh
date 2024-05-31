@@ -28,7 +28,7 @@ MAUS_help() {
         -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
         -f        FastP options. [\" \"].
-        -l        Read length (Bracken). [150].
+        -l        Read length (Bracken). [100].
         -c        Classification level (Bracken) [options: D,P,C,O,F,G,S,S1,etc]. [F]
         -s        Threshold before abundance estimation (Bracken). [0]. 
 
@@ -58,6 +58,15 @@ while getopts '1:2:d:t:w:z:f:l:c:s:' opt; do
         ;;
         f)
         fastp_options=$OPTARG
+        ;;
+        l)
+        read_len=$OPTARG
+        ;;
+        c)
+        classification_level=$OPTARG
+        ;;
+        s)
+        threshold_abundance=$OPTARG
         ;;
         *)
         MAUS_help
