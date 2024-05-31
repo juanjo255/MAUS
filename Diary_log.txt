@@ -10,12 +10,15 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 2024-05-31
 
 * HECHO
-
+1. Se habilitó la descarga de varias librerias separadas por comma
+2. Se agregó la opción de la contrucción de la base de datos de Bracken y Kraken2
+3. Se terminó Bracken 
+4. Se agregó Krona para visualizar los resultados
 
 2024-05-30
 
 * HECHO
-1. Se modifico el wrapper k2 para poder installar las librerias usando protocolo https
+1. Se modificó el wrapper k2 para poder installar las librerias usando protocolo https
 2. Se empezo a agregar Bracken
 
 * CONTINUAR

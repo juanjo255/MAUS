@@ -777,7 +777,8 @@ def download_files_from_manifest(
             try:
                 http_download_file(url, filepath, path_to_save)
             except [ContentTooShortError, HTTPError]:
-                break
+                print("ERROR WITH THIS URL:", url)
+                continue
             downloaded += 1
         filepaths = filepaths[downloaded:]
         # if filepaths:
