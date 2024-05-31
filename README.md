@@ -48,6 +48,6 @@ mamba create -n MAUS -c bioconda fastp kraken2 bracken krona
   
   ```
 
-## Meta
+## Twitter/X
 
 [@Juanpicon255](https://x.com/Juanpicon255)
