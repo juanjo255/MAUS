@@ -22,7 +22,7 @@ MAUS_help() {
     Version: 0.1
 
     Usage: MAUS_cli.sh [options] -1 reads_R1.fastq -2 reads_R2.fastq
---thread
+
     Options:
         -1        Input R1 paired end file. [required].
         -2        Input R2 paired end file. [required].
@@ -179,10 +179,12 @@ bracken_estimation (){
 
 ## Krona visualization of Bracken results
 krona_plot (){
+    echo "**** Setting up Krona *****"
+    echo " "
+    ktUpdateTaxonomy.sh && \
     echo "**** Plotting Bracken results with Krona *****"
     echo " "
-    ln -s /path/on/big/disk/taxonomy /home/genmol1/miniforge3/envs/MAUS/opt/krona/taxonomy
-    ##ktImportTaxonomy -t 5 -m 3 -o $wd$prefix1$prefix2".krona.html" $wd$prefix1$prefix2".kraken2_report"  
+    ktImportTaxonomy -t 5 -m 3 -o $wd$prefix1$prefix2".krona.html" $wd$prefix1$prefix2".kraken2_report"  
 }
 
 
