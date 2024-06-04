@@ -5,12 +5,15 @@ prefix1=""
 prefix2=""
 threads=4
 fastp_options=""
+deactivate_fastp=0
+deactivate_fastqc=0
 read_len=100
 classification_level="F"
 threshold_abundance=0
 kmer_len=35
 build_db=0
 libraries="bacteria,archaea,viral,human,UniVec_Core"
+
 
 MAUS_help() {
     echo "
@@ -24,25 +27,31 @@ MAUS_help() {
     Usage: MAUS_cli.sh [options] -1 reads_R1.fastq -2 reads_R2.fastq
 
     Options:
+    Required:
+
         -1        Input R1 paired end file. [required].
         -2        Input R2 paired end file. [required].
         -d        Database for kraken. if you do not have one, create one before using this pipeline. [required].
-        -n        Build kraken2 and Bracken database (Use with -g for library download). [False].
+    
+    Optional:
+
+        -r        Deactivate fastQC. Adding this option will deactivate quality assessment with fastqc. [False] 
+        -n        Build kraken2 and Bracken database. Adding this option will activate database construction (Use with -g for library download). [False].
         -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core. [kraken2 standard].
         -t        Threads. [4].
         -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
+        -p        Deactivate FastP. Adding this option will deactivate FastP filtering [False]
         -f        FastP options. [\" \"].
         -l        Read length (Bracken). [100].
         -c        Classification level (Bracken) [options: D,P,C,O,F,G,S,S1,etc]. [F]
         -s        Threshold before abundance estimation (Bracken). [0].
         -k        kmer length. (Kraken2,Bracken).[35]
-
         *         Help.
     "
     exit 1
 }
-while getopts '1:2:d:ng:t:w:z:f:l:c:s:k:' opt; do
+while getopts '1:2:d:rng:t:w:z:pf:l:c:s:k:' opt; do
     case $opt in
         1)
         input_R1_file=$OPTARG
@@ -52,6 +61,9 @@ while getopts '1:2:d:ng:t:w:z:f:l:c:s:k:' opt; do
         ;;
         d)
         kraken2_db=$OPTARG
+        ;;
+        r)
+        deactivate_fastqc=1
         ;;
         n)
         build_db=1
@@ -67,6 +79,9 @@ while getopts '1:2:d:ng:t:w:z:f:l:c:s:k:' opt; do
         ;;
         z)
         output_dir="MAUS_result_$(date  "+%Y-%m-%d_%H-%M-%S")/"
+        ;;
+        p)
+        deactivate_fastp=1
         ;;
         f)
         fastp_options=$OPTARG
@@ -124,16 +139,40 @@ fi
 #### FUNCTIONS FOR PIPELINE ####
 
 create_wd (){
-    mkdir $wd
-    echo "Output directory created" 
+    ## Check if output directory exists
+    if [ -d $1 ];
+    then
+        echo "Directory $1 exists."
+    else 
+        mkdir $1
+        echo "Directory $1 created" 
+    fi
 }
 
-## FastP preprocessing
-fastp_preprocess (){
-    echo "**** Quality filter with fastp *****"
-    echo " "
-    echo "FastP options: $fastp_options"
-    fastp --thread $threads -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" -j $wd$prefix2".html" -h $wd$prefix2".json"
+## FastP filtering
+fastp_filter (){
+    if [ $deactivate_fastp -eq 0 ];
+    then
+        echo "**** Quality filter with fastp *****"
+        echo " "
+        echo "FastP options: $fastp_options"
+        fastp --thread $threads -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
+            -j $wd$prefix1"_"$prefix2".html" -h $wd$prefix1"_"$prefix2".json"
+        
+        # Use the filtered reads in the rest of the pipeline
+        input_R1_file=$wd$prefix1".filt.fastq"
+        input_R2_file=$wd$prefix2".filt.fastq"
+    fi
+}
+
+quality_assess_fastqc(){
+    if [ $deactivate_fastqc -eq 0 ];
+    then
+        out_dir="quality_check"
+        create_wd $wd$out_dir && \
+        fastqc -t $threads -o $wd$out_dir $input_R1_file $input_R2_file && \
+        multiqc $wd$out_dir --clean-up --outdir $wd$out_dir
+    fi
 }
 
 kraken2_build_db (){
@@ -190,19 +229,19 @@ krona_plot (){
 
 ## PIPELINE
 
-## Check if output directory exists
-if [ -d $wd ];
-then
-    echo "Directory exists."
-else 
-    create_wd
-fi
 
+## PIPELINE EXECUTION ORDER
+pipeline(){
+    create_wd $wd && fastp_filter && quality_assess_fastqc #&& Kraken2_classification && bracken_estimation #&& krona_plot
+    
+}
+
+## PIPELINE EXECUTION
 if [ $build_db -eq 1 ];
 then
     echo "**** Building databases for kraken2 and Bracken *****"
     echo " " 
-    kraken2_build_db && bracken_build_db
+    kraken2_build_db && bracken_build_db && pipeline
+else
+    pipeline
 fi
-
-#fastp_preprocess && Kraken2_classification && bracken_estimation

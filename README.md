@@ -20,9 +20,15 @@ It's encouraged to use a conda/mamba enviroment.
 For Linux:
 
 ```
+mamba create -n MAUS -c bioconda fastp kraken2 bracken krona fastqc 
+pip install multiqc
 git clone https://github.com/juanjo255/MAUS.git
-mamba create -n MAUS -c bioconda fastp kraken2 bracken krona 
+cd MAUS
+export PATH=$PATH:$(pwd)/kraken2_build
 ```
+NOTES:
+* The folder ```Kraken2_build```is required to be in the path 
+* MultiQC is installed with pip because it works better than conda both in Linux and MacOS
 
 ## Usage example
 

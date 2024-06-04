@@ -692,7 +692,7 @@ def download_log(filename):
     return inner
 
 
-def http_download_file(url, local_name=None, path_to_save=None):
+def http_download_file(url, local_name=None, path_to_save=None, retry=1):
     if not local_name:
         local_name = urllib.parse.urlparse(url).path.split("/")[-1]
     else:
@@ -707,7 +707,17 @@ def http_download_file(url, local_name=None, path_to_save=None):
             return
 
     LOG.info("Beginning download of {:s}\n".format(url))
-    urllib.request.urlretrieve(url, local_name, reporthook=download_log(local_name))
+    
+    remaining_download_tries = retry
+    while remaining_download_tries > 0 :
+        try:
+                urllib.request.urlretrieve(url, local_name, reporthook=download_log(local_name))
+        except:
+            print("error downloading " + url +" on trial no: " + str(retry - remaining_download_tries))
+            remaining_download_tries = remaining_download_tries - 1
+            continue
+        else:
+            break
     clear_console_line()
     LOG.info("Saved {:s} to {:s}\n".format(local_name, os.getcwd()))
 

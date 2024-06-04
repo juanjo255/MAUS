@@ -10,10 +10,15 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 2024-06-04
 
 * HECHO
+1. Se modificó el script de krona ktUpdateTaxonomy para que funcione con https (se debe probar en el SIU, lo hice en mi casa)
+2. Se agregó Krona al pipeline para visulaizacion del resultado de Bracken
+3. Se agregó FastQC y MultiQC para el checkeo de la calidad de los datos
+4. filtrado por fastp, analisis de calidad por fastqc y creacion de la base de datos para Kraken2 y Bracken son pasos opcionales
 
 
 #TODO
-1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan dsponibles
+1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan dsponibles. 
+2. Podria agregar en wget -t/--tries para que reintente las descargas para esa que sufrieron por el internet
 
 
 2024-05-31
