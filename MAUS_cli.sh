@@ -169,7 +169,7 @@ Kraken2_classification (){
         --output $wd$prefix1$prefix2".kraken2_output" $input_R1_file $input_R2_file 
 }
 
-## bracken abundance estimation
+## Bracken abundance estimation
 bracken_estimation (){
     echo "**** Abundance estimation with Bracken *****"
     echo " "
@@ -177,11 +177,12 @@ bracken_estimation (){
         -o $wd$prefix1$prefix2".bracken_output"
 }
 
+## Krona visualization of Bracken results
 krona_plot (){
-    echo "**** Plotting kraken2 results with Krona *****"
+    echo "**** Plotting Bracken results with Krona *****"
     echo " "
     ln -s /path/on/big/disk/taxonomy /home/genmol1/miniforge3/envs/MAUS/opt/krona/taxonomy
-    ktImportTaxonomy -t 5 -m 3 -o $wd$prefix1$prefix2".krona.html" $wd$prefix1$prefix2".kraken2_report"  
+    ##ktImportTaxonomy -t 5 -m 3 -o $wd$prefix1$prefix2".krona.html" $wd$prefix1$prefix2".kraken2_report"  
 }
 
 

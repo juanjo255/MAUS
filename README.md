@@ -5,14 +5,17 @@ This pipeline is for the analysis of metagenomic Illumina sequencing.
 
 
 ## Pipeline overview
-1. Trimming with FastP.
+1. Filtering with FastP.
 2. Read classification with Kraken2
 3. Abundance estimation with Bracken.
-4. Alpha diversity calculation with KrakenTools. 
+4. Alpha diversity calculation with KrakenTools.
+5. Visualization with Krona. 
+
+![pipelineChart](Images/MAUS_pipeline_chart.png)
 
 ## Installation
 
-It's encourage to use a conda/mamba enviroment.
+It's encouraged to use a conda/mamba enviroment.
 
 For Linux:
 

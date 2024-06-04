@@ -1,10 +1,19 @@
-Este es el registro de lo utlimo hecho y proximo por hacer. Me servira para tener registro del dia a dia.
 
-* PARA CONSIDERAR
+Este es el registro de lo ultimo hecho y proximo por hacer. Me servira para tener registro del dia a dia.
+
+#TODO en el futuro
 Esta parte son cosas que podria hacer en el futuro que no son demandadas por ahora
 1. Agregar en el help opciones comunes, por ejemplo, para FastP agregar la opcion de cortar un numero de nucleotidos por delante 
 
 * REGISTROS
+
+2024-06-04
+
+* HECHO
+
+
+#TODO
+1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan dsponibles
 
 
 2024-05-31
