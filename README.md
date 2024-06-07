@@ -85,7 +85,7 @@ NOTES:
 * If you already have a kracken2 and a Bracken database:
   
   ```
-  ./MAUS_cli.sh -1 path/reads_R1.fastq -2 tpath/reads_R2.fastq -d path/to/database -t 14
+  ./MAUS_cli.sh -1 path/to/reads_R1.fastq[.gz] -2 path/to/reads_R2.fastq[.gz] -d path/to/database-t 14 
   ```
 
 
