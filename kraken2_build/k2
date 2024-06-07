@@ -597,27 +597,33 @@ def assign_taxid_to_sequences(manifest_to_taxid, is_protein):
         ch = "aa" if is_protein else "bp"
         max_out_chars = 0
         for filepath in sorted(manifest_to_taxid):
-            remote_filepath = urllib.parse.urljoin("/genomes/", filepath)
-            taxid = manifest_to_taxid[filepath]
-            with gzip.open(filepath, "rt") as in_file:
-                while True:
-                    line = in_file.readline()
-                    if line == "":
-                        break
-                    if line.startswith(">"):
-                        line = line.replace(">", ">kraken:taxid|" + taxid + "|", 1)
-                        sequence_name_to_remote_filepath[line] = remote_filepath
-                        sequences_added += 1
-                    else:
-                        ch_added += len(line) - 1
-                    f.write(line)
-            projects_added += 1
-            out_line = progress_line(
-                projects_added, total_projects, sequences_added, ch_added, ch
-            )
-            max_out_chars = max(len(out_line), max_out_chars)
-            space_line = " " * max_out_chars
-            LOG.debug("\r{:s}\r{:s}".format(space_line, out_line))
+            try:
+                
+                remote_filepath = urllib.parse.urljoin("/genomes/", filepath)
+                taxid = manifest_to_taxid[filepath]
+                with gzip.open(filepath, "rt") as in_file:
+                    while True:
+                        line = in_file.readline()
+                        if line == "":
+                            break
+                        if line.startswith(">"):
+                            line = line.replace(">", ">kraken:taxid|" + taxid + "|", 1)
+                            sequence_name_to_remote_filepath[line] = remote_filepath
+                            sequences_added += 1
+                        else:
+                            ch_added += len(line) - 1
+                        f.write(line)
+                projects_added += 1
+                out_line = progress_line(
+                    projects_added, total_projects, sequences_added, ch_added, ch
+                )
+                max_out_chars = max(len(out_line), max_out_chars)
+                space_line = " " * max_out_chars
+                LOG.debug("\r{:s}\r{:s}".format(space_line, out_line))
+            except:
+                print("")
+                print("Skipping undownloaded files. This is normal only under clean-library command")
+                continue
         LOG.info("\nFinished assigning taxonomic IDs to sequences\n")
 
         return sequence_name_to_remote_filepath
@@ -869,7 +875,8 @@ def download_genomic_library(args):
             library_pathname = os.path.join(args.db, "library", domain)
             os.makedirs(library_pathname, exist_ok=True)
             os.chdir(library_pathname)
-            ## update assembly_summary
+            
+            ## update assembly_summary.txt
             try:
                 os.remove("assembly_summary.txt")
             except FileNotFoundError:
@@ -1023,7 +1030,6 @@ def download_genomic_library(args):
 def clean_genomic_library(args):
     library_filename = "library.faa" if args.protein else "library.fna"
     library_pathname = os.path.join(args.db, "library")
-    LOG.info("Adding {:s} to {:s}\n".format(args.library, args.db))
     files_to_remove = None
     for domain in args.library.split(","):
         domain=domain.strip()
@@ -1036,30 +1042,8 @@ def clean_genomic_library(args):
             "human",
             "protozoa",
         ]:
-            library_filename = "library.faa" if args.protein else "library.fna"
             library_pathname = os.path.join(args.db, "library", domain)
-            #library_pathname = os.path.join(library_pathname, domain)
-            os.makedirs(library_pathname, exist_ok=True)
             os.chdir(library_pathname)
-            try:
-                os.remove("assembly_summary.txt")
-            except FileNotFoundError:
-                pass
-            remote_dir_name = domain
-            if domain == "human":
-                remote_dir_name = "vertebrate_mammalian/Homo_sapiens"
-            try:
-                url = "https://{:s}/genomes/refseq/{:s}/assembly_summary.txt".format(
-                    NCBI_SERVER, remote_dir_name
-                )
-                http_download_file(url)
-            except urllib.error.URLError:
-                LOG.error(
-                    "Error downloading assembly summary file for {:s}, exiting\n".format(
-                        domain
-                    )
-                )
-                sys.exit(1)
             if domain == "human":
                 with open("assembly_summary.txt", "r") as f1:
                     with open("grc.txt", "w") as f2:
@@ -1080,7 +1064,9 @@ def clean_genomic_library(args):
                     scan_fasta_file(
                         in_file, out_file, seq_name_to_url_table=seq_name_to_url_table
                     )
-            files_to_remove = ["all", "manifest.txt"]
+        files_to_remove = ["all", "manifest.txt"]
+        if files_to_remove:
+            clean_up(files_to_remove)
 
 def get_abs_path(filename):
     return os.path.abspath(filename)
@@ -2014,6 +2000,44 @@ def make_download_library_parser(subparsers):
     )
 
 
+def make_clean_library_parser(subparsers):
+    parser = subparsers.add_parser(
+        "clean-library", help="Download and build a special database"
+    )
+    parser.add_argument(
+        "--db",
+        type=str,
+        metavar="PATHNAME",
+        required=True,
+        help="Name of Kraken 2 database",
+    )
+    parser.add_argument(
+        "--library",
+        type=str,
+        required=True,
+        help="Name of libraries to download",
+    )
+    parser.add_argument(
+        "--protein",
+        action="store_true",
+        help="Files being added are for a protein database",
+    )
+    parser.add_argument(
+        "--no-masking",
+        action="store_true",
+        help="Avoid masking low-complexity sequences prior to\
+            building; masking requires dustmasker or segmasker to be\
+            installed",
+    )
+    parser.add_argument(
+        "--log",
+        type=str,
+        metavar="FILENAME",
+        default=None,
+        help="Specify a log filename (default stderr)",
+    )
+    
+
 def make_add_to_library_parser(subparsers):
     parser = subparsers.add_parser("add-to-library", help="Add file(s) to library")
     parser.add_argument(
@@ -2245,6 +2269,7 @@ def make_cmdline_parser():
     subparsers = parser.add_subparsers()
     make_add_to_library_parser(subparsers)
     make_download_library_parser(subparsers)
+    make_clean_library_parser(subparsers)
     make_download_taxonomy_parser(subparsers)
     make_build_parser(subparsers)
     make_classify_parser(subparsers)
@@ -2358,6 +2383,8 @@ def k2_main():
                 )
             build_kraken2_db(args)
 
+    elif task == "clean-library":
+        clean_genomic_library(args)
 
 if __name__ == "__main__":
     k2_main()

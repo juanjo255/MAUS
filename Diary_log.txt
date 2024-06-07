@@ -7,13 +7,19 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 
 * REGISTROS
 
+2024-06-07
+
+* HECHO
+1. 
+
+#TODO 
+
+1. Agregar kraken-tools y organizar en una tabla los resultados.
+
 2024-06-06
 
 * HECHO
 1. No se podia agregar -t/--tries para wget dado que se hace con la libreria urllib, asi que se agregó un bloque try/except.
-
-
-#TODO
 
 
 2024-06-04

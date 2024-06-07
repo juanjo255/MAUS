@@ -31,7 +31,7 @@ MAUS_help() {
 
         -1        Input R1 paired end file. [required].
         -2        Input R2 paired end file. [required].
-        -d        Database for kraken. if you do not have one, create one before using this pipeline. [required].
+        -d        Database for Kraken2 and Bracken. if you do not have one, you need to create it first. Check flag -n and -g. [required].
     
     Optional:
 
@@ -142,10 +142,14 @@ create_wd (){
     ## Check if output directory exists
     if [ -d $1 ];
     then
+        echo " "
         echo "Directory $1 exists."
+        echo " "
     else 
         mkdir $1
-        echo "Directory $1 created" 
+        echo " "
+        echo "Directory $1 created"
+        echo " " 
     fi
 }
 
@@ -153,6 +157,7 @@ create_wd (){
 fastp_filter (){
     if [ $deactivate_fastp -eq 0 ];
     then
+        echo " "
         echo "**** Quality filter with fastp *****"
         echo " "
         echo "FastP options: $fastp_options"
@@ -176,6 +181,7 @@ quality_assess_fastqc(){
 }
 
 kraken2_build_db (){
+    echo " "
     echo "**** Downloading required files for kraken2 database *****"
     echo " "
 
@@ -192,6 +198,7 @@ kraken2_build_db (){
 }
 ## bracken build database
 bracken_build_db (){
+    echo " "
     echo "**** Building Bracken database *****"
     echo " "
     bracken-build -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean
@@ -202,28 +209,31 @@ bracken_build_db (){
 
 ## Kraken2 classification
 Kraken2_classification (){
+    echo " "
     echo "**** Read classification with Kraken2 *****"
     echo " "
-    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1$prefix2".kraken2_report" --report-minimizer-data --use-mpa-style \
-        --output $wd$prefix1$prefix2".kraken2_output" $input_R1_file $input_R2_file 
+    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1$prefix2".kraken2_report" --report-minimizer-data \
+        --output $wd$prefix1"_"$prefix2".kraken2_output" $input_R1_file $input_R2_file 
 }
 
 ## Bracken abundance estimation
 bracken_estimation (){
+    echo " "
     echo "**** Abundance estimation with Bracken *****"
     echo " "
-    bracken -d $kraken2_db -i $wd$prefix1$prefix2".kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \ 
-        -o $wd$prefix1$prefix2".bracken_output"
+    bracken -d $kraken2_db -i $wd$prefix1$prefix2".kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \
+        -o $wd$prefix1"_"$prefix2".bracken_output"
 }
 
 ## Krona visualization of Bracken results
 krona_plot (){
+    echo " "
     echo "**** Setting up Krona *****"
     echo " "
     ktUpdateTaxonomy.sh && \
     echo "**** Plotting Bracken results with Krona *****"
     echo " "
-    ktImportTaxonomy -t 5 -m 3 -o $wd$prefix1$prefix2".krona.html" $wd$prefix1$prefix2".kraken2_report"  
+    ktImportTaxonomy -t 2 -m 3 -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".kraken2_report"  
 }
 
 
@@ -232,7 +242,7 @@ krona_plot (){
 
 ## PIPELINE EXECUTION ORDER
 pipeline(){
-    create_wd $wd && fastp_filter && quality_assess_fastqc #&& Kraken2_classification && bracken_estimation #&& krona_plot
+    create_wd $wd && fastp_filter && quality_assess_fastqc && Kraken2_classification && bracken_estimation && krona_plot
     
 }
 
