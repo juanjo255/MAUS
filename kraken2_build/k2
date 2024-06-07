@@ -25,6 +25,7 @@ import urllib.error
 from urllib.error import HTTPError, ContentTooShortError
 import urllib.parse
 import urllib.request
+from tqdm import tqdm
 
 LOG = None
 SCRIPT_PATHNAME = None
@@ -692,7 +693,7 @@ def download_log(filename):
     return inner
 
 
-def http_download_file(url, local_name=None, path_to_save=None, retry=1):
+def http_download_file(url, local_name=None, path_to_save=None, retry=2):
     if not local_name:
         local_name = urllib.parse.urlparse(url).path.split("/")[-1]
     else:
@@ -714,6 +715,9 @@ def http_download_file(url, local_name=None, path_to_save=None, retry=1):
                 urllib.request.urlretrieve(url, local_name, reporthook=download_log(local_name))
         except:
             print("error downloading " + url +" on trial no: " + str(retry - remaining_download_tries))
+            LOG.warning(
+                "There was an issue downloading files over HTTP"
+                )
             remaining_download_tries = remaining_download_tries - 1
             continue
         else:
@@ -780,7 +784,7 @@ def download_files_from_manifest(
             #     continue
             filepaths.append(filepath)
         downloaded = 0
-        for filepath in filepaths:
+        for filepath in tqdm(filepaths):
             url = urllib.parse.urlunsplit(
                 ("https", server, remote_dir + filepath, "", "")
             )
@@ -863,9 +867,9 @@ def download_genomic_library(args):
             "protozoa",
         ]:
             library_pathname = os.path.join(args.db, "library", domain)
-            #library_pathname = os.path.join(library_pathname, domain)
             os.makedirs(library_pathname, exist_ok=True)
             os.chdir(library_pathname)
+            ## update assembly_summary
             try:
                 os.remove("assembly_summary.txt")
             except FileNotFoundError:
@@ -1016,6 +1020,67 @@ def download_genomic_library(args):
         if files_to_remove:
             clean_up(files_to_remove)
 
+def clean_genomic_library(args):
+    library_filename = "library.faa" if args.protein else "library.fna"
+    library_pathname = os.path.join(args.db, "library")
+    LOG.info("Adding {:s} to {:s}\n".format(args.library, args.db))
+    files_to_remove = None
+    for domain in args.library.split(","):
+        domain=domain.strip()
+        if domain in [
+            "archaea",
+            "bacteria",
+            "viral",
+            "fungi",
+            "plant",
+            "human",
+            "protozoa",
+        ]:
+            library_filename = "library.faa" if args.protein else "library.fna"
+            library_pathname = os.path.join(args.db, "library", domain)
+            #library_pathname = os.path.join(library_pathname, domain)
+            os.makedirs(library_pathname, exist_ok=True)
+            os.chdir(library_pathname)
+            try:
+                os.remove("assembly_summary.txt")
+            except FileNotFoundError:
+                pass
+            remote_dir_name = domain
+            if domain == "human":
+                remote_dir_name = "vertebrate_mammalian/Homo_sapiens"
+            try:
+                url = "https://{:s}/genomes/refseq/{:s}/assembly_summary.txt".format(
+                    NCBI_SERVER, remote_dir_name
+                )
+                http_download_file(url)
+            except urllib.error.URLError:
+                LOG.error(
+                    "Error downloading assembly summary file for {:s}, exiting\n".format(
+                        domain
+                    )
+                )
+                sys.exit(1)
+            if domain == "human":
+                with open("assembly_summary.txt", "r") as f1:
+                    with open("grc.txt", "w") as f2:
+                        for line in f1:
+                            if line.find("Genome Reference Consortium"):
+                                f2.write(line)
+                os.rename("grc.txt", "assembly_summary.txt")
+            with open("assembly_summary.txt", "r") as f:
+                filepath_to_taxid_table = make_manifest_from_assembly_summary(
+                    f, args.protein
+                )
+                seq_name_to_url_table = assign_taxid_to_sequences(
+                    filepath_to_taxid_table, args.protein
+                )
+            with open(library_filename, "r") as in_file:
+                with open("prelim_map.txt", "w") as out_file:
+                    out_file.write("# prelim_map for " + domain + "\n")
+                    scan_fasta_file(
+                        in_file, out_file, seq_name_to_url_table=seq_name_to_url_table
+                    )
+            files_to_remove = ["all", "manifest.txt"]
 
 def get_abs_path(filename):
     return os.path.abspath(filename)

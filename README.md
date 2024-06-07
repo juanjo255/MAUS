@@ -17,7 +17,7 @@ It's encouraged to use a conda/mamba enviroment.
 For Linux:
 
 ```
-mamba create -n MAUS -c bioconda fastp kraken2 bracken krona fastqc 
+mamba create -n MAUS -c bioconda fastp kraken2 bracken krona fastqc tqdm
 pip install multiqc
 git clone https://github.com/juanjo255/MAUS.git
 cd MAUS
@@ -27,7 +27,14 @@ NOTES:
 * The folder ```Kraken2_build```is required to be in the path 
 * MultiQC is installed with pip because it works better than conda both in Linux and MacOS
 
-## Usage example
+## Usage intructions
+
+* If for any reason you got problems during taxonomy and libraries downloading, you can resume the download in this way:
+
+  ```
+  k2 download-taxonomy --db path/to/database
+  k2 download-library --db path/to/database --library "bacteria, fungi"
+  ```
 
 * For help message
   ```

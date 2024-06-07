@@ -7,6 +7,15 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 
 * REGISTROS
 
+2024-06-06
+
+* HECHO
+1. No se podia agregar -t/--tries para wget dado que se hace con la libreria urllib, asi que se agregó un bloque try/except.
+
+
+#TODO
+
+
 2024-06-04
 
 * HECHO
@@ -16,7 +25,7 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 4. filtrado por fastp, analisis de calidad por fastqc y creacion de la base de datos para Kraken2 y Bracken son pasos opcionales
 
 #TODO
-1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan dsponibles. 
+1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan disponibles. 
 2. Podria agregar en wget -t/--tries para que reintente las descargas para esa que sufrieron por el internet.
 3. Probar pipeline completo. Definir si se usa Bracken para la visualizacion de Krona.
 
@@ -30,7 +39,7 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 4. Se agregó Krona para visualizar los resultados
 
 * CONTINUAR
-1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan dsponibles
+1. Hay un error con las descargas de los links. Sospecho es por ensambles que ya no estan disponibles
 2. Probar el pipeline completo
 3. Terminar de agregar Krona
 
