@@ -222,7 +222,7 @@ Kraken2_classification (){
     echo " "
     echo "**** Read classification with Kraken2 *****"
     echo " "
-    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1$prefix2".kraken2_report" --report-minimizer-data \
+    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1"_"$prefix2".kraken2_report" --report-minimizer-data \
         --output $wd$prefix1"_"$prefix2".kraken2_output" $input_R1_file $input_R2_file 
 }
 
@@ -231,7 +231,7 @@ bracken_estimation (){
     echo " "
     echo "**** Abundance estimation with Bracken *****"
     echo " "
-    bracken -d $kraken2_db -i $wd$prefix1$prefix2".kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \
+    bracken -d $kraken2_db -i $wd$prefix1"_"$prefix2".kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \
         -o $wd$prefix1"_"$prefix2".bracken_output"
 }
 
