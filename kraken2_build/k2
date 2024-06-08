@@ -1438,11 +1438,23 @@ def build_16S_silva(args):
     remote_directory = "/release_138_1/Exports"
     fasta_filename = "SILVA_138.1_SSURef_NR99_tax_silva.fasta.gz"
     taxonomy_prefix = "tax_slv_ssu_138.1"
-    ftp = FTP(SILVA_SERVER)
-    ftp.download(remote_directory, fasta_filename)
-    ftp.download(remote_directory + "/taxonomy", taxonomy_prefix + ".acc_taxid.gz")
+    # ftp = FTP(SILVA_SERVER)
+    # ftp.download(remote_directory, fasta_filename)
+    url = "https://{:s}{:s}/{:s}".format(
+                    SILVA_SERVER, remote_directory, fasta_filename
+                )
+    http_download_file(url)
+    # ftp.download(remote_directory + "/taxonomy", taxonomy_prefix + ".acc_taxid.gz")
+    url = "https://{:s}{:s}/{:s}".format(
+                    SILVA_SERVER, remote_directory + "/taxonomy", taxonomy_prefix + ".acc_taxid.gz"
+                )
+    http_download_file(url)
     decompress_files([taxonomy_prefix + ".acc_taxid.gz"])
-    ftp.download(remote_directory + "/taxonomy", taxonomy_prefix + ".txt.gz")
+    # ftp.download(remote_directory + "/taxonomy", taxonomy_prefix + ".txt.gz")
+    url = "https://{:s}{:s}/{:s}".format(
+                    SILVA_SERVER, remote_directory + "/taxonomy", taxonomy_prefix + ".txt.gz"
+                )
+    http_download_file(url)
     with gzip.open(taxonomy_prefix + ".txt.gz", "rt") as f:
         build_silva_taxonomy(f)
     os.chdir(os.path.pardir)
