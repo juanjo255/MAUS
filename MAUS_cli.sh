@@ -159,7 +159,7 @@ create_wd (){
 
 ## FastP filtering
 fastp_filter (){
-    if ! [ $deactivate_fastp -eq 0 ];
+    if [ $deactivate_fastp -eq 0 ];
     then
         echo " "
         echo "**** Quality filter with fastp *****"
@@ -188,7 +188,7 @@ kraken2_build_db (){
     echo " "
     echo "**** Downloading required files for kraken2 database *****"
     echo " "
-    if [ -z $special_library ];
+    if ! [ -z $special_library ];
     then 
         echo " "
         echo "**** Downloading special database: $special_library *****"
