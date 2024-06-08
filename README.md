@@ -25,10 +25,11 @@ cd MAUS
 ```
 
 You need to replace the ```ktUpdateTaxonomy``` in your conda/mamba path for our modified version
-and add ```kraken2_build folder``` to your path
+and add ```kraken2_build folder``` to your path and make sure it has execution permission.
 ```
 cp ktUpdateTaxonomy.sh $(which ktUpdateTaxonomy.sh)
 export PATH=$PATH:$(pwd)/kraken2_build
+chmod +x kraken2_build/*
 ```
 
 NOTES:
