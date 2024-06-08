@@ -13,7 +13,6 @@ threshold_abundance=0
 kmer_len=35
 build_db=0
 libraries="bacteria,archaea,viral,human,UniVec_Core"
-special_library=""
 
 
 MAUS_help() {
@@ -160,7 +159,7 @@ create_wd (){
 
 ## FastP filtering
 fastp_filter (){
-    if [ $deactivate_fastp -eq 0 ];
+    if ! [ $deactivate_fastp -eq 0 ];
     then
         echo " "
         echo "**** Quality filter with fastp *****"

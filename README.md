@@ -30,6 +30,7 @@ and add ```kraken2_build folder``` to your path and make sure it has execution p
 cp ktUpdateTaxonomy.sh $(which ktUpdateTaxonomy.sh)
 export PATH=$PATH:$(pwd)/kraken2_build
 chmod +x kraken2_build/*
+chmod +x *
 ```
 
 NOTES:
