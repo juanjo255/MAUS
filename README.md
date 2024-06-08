@@ -66,8 +66,9 @@ NOTES:
     Optional:
 
         -r        Deactivate fastQC. Adding this option will deactivate quality assessment with fastqc. [False] 
-        -n        Build kraken2 and Bracken database. Adding this option will activate database construction (Use with -g for library download). [False].
+        -n        Build kraken2 and Bracken database. Adding this option will activate database construction (Use with -g or -e for library download). [False].
         -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core. [kraken2 standard].
+        -e        Special library. One of: greengenes, silva, rdp.
         -t        Threads. [4].
         -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].

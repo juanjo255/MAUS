@@ -13,6 +13,7 @@ threshold_abundance=0
 kmer_len=35
 build_db=0
 libraries="bacteria,archaea,viral,human,UniVec_Core"
+special_library=""
 
 
 MAUS_help() {
@@ -36,8 +37,9 @@ MAUS_help() {
     Optional:
 
         -r        Deactivate fastQC. Adding this option will deactivate quality assessment with fastqc. [False] 
-        -n        Build kraken2 and Bracken database. Adding this option will activate database construction (Use with -g for library download). [False].
+        -n        Build kraken2 and Bracken database. Adding this option will activate database construction (Use with -g or -e for library download). [False].
         -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core. [kraken2 standard].
+        -e        Special library. One of: greengenes, silva, rdp.
         -t        Threads. [4].
         -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
@@ -51,7 +53,7 @@ MAUS_help() {
     "
     exit 1
 }
-while getopts '1:2:d:rng:t:w:z:pf:l:c:s:k:' opt; do
+while getopts '1:2:d:rng:e:t:w:z:pf:l:c:s:k:' opt; do
     case $opt in
         1)
         input_R1_file=$OPTARG
@@ -70,6 +72,9 @@ while getopts '1:2:d:rng:t:w:z:pf:l:c:s:k:' opt; do
         ;;
         g)
         libraries=$OPTARG
+        ;;
+        e)
+        special_library=$OPTARG
         ;;
         t)
         threads=$OPTARG
@@ -184,17 +189,23 @@ kraken2_build_db (){
     echo " "
     echo "**** Downloading required files for kraken2 database *****"
     echo " "
-
-    ## Download taxonomy
-    if [ -f $kraken2_db"/taxonomy/nucl_gb.accession2taxid" ] || [ -f $kraken2_db"/taxonomy/nucl_wgs.accession2taxid" ]; then
-        echo "Taxonomy files exist"
+    if [ -z $special_library ];
+    then 
+        echo " "
+        echo "**** Downloading special database: $special_library *****"
+        echo " "
+        k2 build --db $kraken2_db
     else
-        k2 download-taxonomy --db $kraken2_db
-    fi
+        ## Download taxonomy
+        if [ -f $kraken2_db"/taxonomy/nucl_gb.accession2taxid" ] || [ -f $kraken2_db"/taxonomy/nucl_wgs.accession2taxid" ]; then
+            echo "Taxonomy files exist"
+        else
+            k2 download-taxonomy --db $kraken2_db
+        fi
 
-    ## Download libraries
-    k2 download-library --db $kraken2_db --library $libraries && kraken2-build --build --db $kraken2_db --threads $threads
-    
+        ## Download libraries
+        k2 download-library --db $kraken2_db --library $libraries && kraken2-build --build --db $kraken2_db --threads $threads
+    fi
 }
 ## bracken build database
 bracken_build_db (){
@@ -233,7 +244,7 @@ krona_plot (){
     ktUpdateTaxonomy.sh && \
     echo "**** Plotting Bracken results with Krona *****"
     echo " "
-    ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output" #$wd$prefix1"_"$prefix2".kraken2_report"  
+    ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"  
 }
 
 
