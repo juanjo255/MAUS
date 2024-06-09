@@ -19,8 +19,8 @@ For Linux:
 ```
 mamba create -n MAUS -c bioconda fastp kraken2 bracken krona fastqc tqdm
 mamba activate MAUS
-pip install multiqc
-git clone https://github.com/juanjo255/MAUS.git
+pip install multiqc scipy
+git clone --recursive https://github.com/juanjo255/MAUS.git
 cd MAUS
 ```
 
