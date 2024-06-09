@@ -236,6 +236,16 @@ bracken_estimation (){
 }
 
 ## Krona visualization of Bracken results
+alpha_diversity (){
+    for i in "Sh" "BP" "Si" "ISi" "F"
+    do 
+        echo $i 
+        KrakenTools/DiversityTools/alpha_diversity.py \
+        --filename  $wd$prefix1"_"$prefix2".bracken_output" --alpha $i >> $wd$prefix1"_"$prefix2".alphaDiversity.tsv"
+    done 
+}
+
+## Krona visualization of Bracken results
 krona_plot (){
     echo " "
     echo "**** Setting up Krona *****"
@@ -252,8 +262,8 @@ krona_plot (){
 
 ## PIPELINE EXECUTION ORDER
 pipeline(){
-    create_wd $wd && fastp_filter && quality_assess_fastqc && Kraken2_classification && bracken_estimation && krona_plot
-    
+    create_wd $wd && fastp_filter && quality_assess_fastqc \
+    && Kraken2_classification && bracken_estimation && krona_plot && alpha_diversity
 }
 
 ## PIPELINE EXECUTION

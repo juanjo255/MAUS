@@ -7,14 +7,22 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 
 * REGISTROS
 
-2024-06-08
+2024-06-09
 
+* HECHO
+1. Agregué alpha diversidad con kraken tools
+2. Modifique la actualizacion de la taxonomia en krona para la taxonomia de Silva cuando se use 16S
+
+#TODO
+1. Probar pipeline completo
+
+2024-06-08
 * HECHO
 1. Arreglé la descarga de la base de datos SILVA para que use https
 
 #TODO
 1. Para Krona hace falta descargar el taxdump de SILVA, porq me parece que el de genomas no cubre algunas especies
-2. Agregar kraken-tools y organizar en una tabla los resultados.
+2. Agregar kraken-tools y organizar en un archivo CSV los resultados.
 
 2024-06-06
 
