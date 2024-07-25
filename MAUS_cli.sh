@@ -193,7 +193,7 @@ kraken2_build_db (){
         echo " "
         echo "**** Downloading special database: $special_library *****"
         echo " "
-        k2 build --db $kraken2_db
+        k2 build --db $kraken2_db --special $special_library
     else
         ## Download taxonomy
         if [ -f $kraken2_db"/taxonomy/nucl_gb.accession2taxid" ] || [ -f $kraken2_db"/taxonomy/nucl_wgs.accession2taxid" ]; then
