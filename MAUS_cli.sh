@@ -274,12 +274,13 @@ then
     check_db=$(k2 inspect --skip-counts --threads $threads --db $kraken2_db 2> /dev/null)
     if [ -z $check_db ];
     then
-        echo "Kraken database exists. Skipping downloading"
-        pipeline
-    else
         echo "**** Building databases for kraken2 and Bracken *****"
         echo " " 
         kraken2_build_db && bracken_build_db && pipeline
+        
+    else
+        echo "Kraken database exists. Skipping downloading"
+        pipeline
     fi
 else
     pipeline
