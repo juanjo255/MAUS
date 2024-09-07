@@ -24,16 +24,19 @@ git clone --recursive https://github.com/juanjo255/MAUS.git
 cd MAUS
 ```
 
-You need to replace the ```ktUpdateTaxonomy``` in your conda/mamba path for our modified version
-and add ```kraken2_build folder``` to your path and make sure it has execution permission.
+**You need to replace the ```ktUpdateTaxonomy``` in your conda/mamba path for our modified version**, this modified version works with https protocol.
+Also, please add ```kraken2_build folder``` to your path and make sure it has execution permission.
 ```
+# Add to path
 cp ktUpdateTaxonomy.sh $(which ktUpdateTaxonomy.sh)
 export PATH=$PATH:$(pwd)/kraken2_build
+
+# Execution permission
 chmod +x kraken2_build/*
 chmod +x *
 ```
 
-NOTES:
+**NOTES:**
 * The folder ```Kraken2_build```is required to be in the path 
 * MultiQC is installed with pip because it works better than conda both in Linux and MacOS
 
