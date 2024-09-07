@@ -213,9 +213,9 @@ bracken_build_db (){
     echo " "
      if ! [ -z $special_library ];
     then 
-        $exec_path"/bracken-build" -d $kraken2_db -t $threads -k $kmer_len -l $read_len
+        $exec_path"/Bracken/bracken-build" -d $kraken2_db -t $threads -k $kmer_len -l $read_len
     else
-        $exec_path"/bracken-build" -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean --db $kraken2_db
+        $exec_path"/Bracken/bracken-build" -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean --db $kraken2_db
     fi
     echo " "
     echo "**** Unneeded files were removed *****"
