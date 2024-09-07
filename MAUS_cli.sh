@@ -179,7 +179,7 @@ quality_assess_fastqc(){
     then
         out_dir="quality_check"
         create_wd $wd$out_dir && \
-        fastqc -t $threads -o $wd$out_dir $input_R1_file $input_R2_file && \
+        fastqc -q -t $threads -o $wd$out_dir $input_R1_file $input_R2_file && \
         multiqc $wd$out_dir --clean-up --outdir $wd$out_dir
     fi
 }
