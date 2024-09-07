@@ -1,3 +1,6 @@
 [submodule "KrakenTools"]
 	path = KrakenTools
 	url = https://github.com/jenniferlu717/KrakenTools.git
+[submodule "Bracken"]
+	path = Bracken
+	url = https://github.com/jenniferlu717/Bracken.git

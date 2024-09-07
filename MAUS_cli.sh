@@ -213,9 +213,9 @@ bracken_build_db (){
     echo " "
      if ! [ -z $special_library ];
     then 
-        bracken-build -d $kraken2_db -t $threads -k $kmer_len -l $read_len
+        $exec_path"/bracken-build" -d $kraken2_db -t $threads -k $kmer_len -l $read_len
     else
-        bracken-build -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean --db $kraken2_db
+        $exec_path"/bracken-build" -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean --db $kraken2_db
     fi
     echo " "
     echo "**** Unneeded files were removed *****"
@@ -266,6 +266,19 @@ krona_plot (){
 
 ## PIPELINE
 
+## Executable path
+# FIXME 
+# This part could generate problems, I am trying just to get the executable path to locate other folders
+if which MAUS_cli.sh > /dev/null 2>&1; then
+    ## This wont work for a while I guess. This is thought for a wet dream of using in anaconda or nextflow
+    exec_path=$(grep -o ".*/" $(which MAUS_cli.sh))
+else
+    if [ "$(grep -o "/" <<< $0 | wc -l)" -gt 0 ]; then
+        exec_path=$(grep -o ".*/" <<< $0)
+    else
+        exec_path="./"
+    fi
+fi
 
 ## PIPELINE EXECUTION ORDER
 pipeline(){
