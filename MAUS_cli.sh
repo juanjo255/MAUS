@@ -271,7 +271,8 @@ pipeline(){
 ## PIPELINE EXECUTION
 if [ $build_db -eq 1 ];
 then
-    if [ -d $kraken2_db ];
+    check_db=$(k2 inspect --skip-counts --threads $threads --db $kraken_db 1> /dev/null)
+    if [ -z $check_db ];
     then
         echo "Kraken database exists. Skipping downloading"
         pipeline
