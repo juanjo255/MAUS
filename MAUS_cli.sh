@@ -271,9 +271,15 @@ pipeline(){
 ## PIPELINE EXECUTION
 if [ $build_db -eq 1 ];
 then
-    echo "**** Building databases for kraken2 and Bracken *****"
-    echo " " 
-    kraken2_build_db && bracken_build_db && pipeline
+    if [ -d $kraken2_db ];
+    then
+        echo "Kraken database exists. Skipping downloading"
+        pipeline
+    else
+        echo "**** Building databases for kraken2 and Bracken *****"
+        echo " " 
+        kraken2_build_db && bracken_build_db && pipeline
+    fi
 else
     pipeline
 fi
