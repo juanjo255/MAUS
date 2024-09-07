@@ -247,7 +247,7 @@ alpha_diversity (){
     echo " "
     for i in "Sh" "BP" "Si" "ISi" "F"
     do 
-        KrakenTools/DiversityTools/alpha_diversity.py \
+        $exec_path"/KrakenTools/DiversityTools/alpha_diversity.py" \
         --filename  $wd$prefix1"_"$prefix2".bracken_output" --alpha $i >> $wd$prefix1"_"$prefix2".alphaDiversity.tsv"
     done 
 }
@@ -289,7 +289,7 @@ pipeline(){
 ## PIPELINE EXECUTION
 if [ $build_db -eq 1 ];
 then
-    check_db=$(k2 inspect --skip-counts --threads $threads --db $kraken2_db 2> /dev/null)
+    check_db=$(kraken2-inspect --skip-counts --threads $threads --db $kraken2_db 2> /dev/null)
     if [ -z $check_db ];
     then
         echo "**** Building databases for kraken2 and Bracken *****"
