@@ -211,7 +211,7 @@ bracken_build_db (){
     echo " "
     echo "**** Building Bracken database *****"
     echo " "
-    bracken-build -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean --db $kraken2_db 
+    bracken-build -d $kraken2_db -t $threads -k $kmer_len -l $read_len && kraken2-build --clean --db $kraken2_db
     echo " "
     echo "**** Unneeded files were removed *****"
     echo " "
