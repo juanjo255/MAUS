@@ -150,7 +150,7 @@ create_wd (){
         echo "Directory $1 exists."
         echo " "
     else 
-        mkdir $1
+        mkdir -p $1
         echo " "
         echo "Directory $1 created"
         echo " " 
