@@ -1,5 +1,6 @@
 ## Default Options
-wd="./MAUS_result/"
+wd="."
+output_dir="maus_result"
 prefix1=""
 prefix2=""
 threads=4
@@ -59,7 +60,7 @@ MAUS_help() {
         -g        Libraries. It can accept a comma-delimited list with: archaea, bacteria, plasmid, viral, human, fungi, plant, protozoa, nr, nt, UniVec, UniVec_Core. [kraken2 standard].
         -e        Special library. One of: greengenes, silva, rdp.
         -t        Threads. [4].
-        -w        Working directory. Path to create the folder which will contain all MAUS information. [./MAUS_result].
+        -w        Working directory. Path to create the folder which will contain all MAUS information. ["."].
         -z        Different output directory. Create a different output directory every run (it uses the date and time). [False].
         -p        Deactivate FastP. Adding this option will deactivate FastP filtering [False]
         -f        FastP options. [\" \"].
@@ -139,11 +140,9 @@ if [ $OPTIND -eq 1 ]; then MAUS_help; fi
 if [ -z $kraken2_db ]; then echo "ERROR => Kraken2 database is missing"; MAUS_help; fi
 
 ## Check if working directory has the last slash
-if [ ${wd: -1} = / ];
+if ! [ ${wd: -1} = / ];
 then 
-    wd=$wd$output_dir
-else
-    wd=$wd"/"$output_dir
+    wd=$wd"/"
 fi
 
 ## PREFIX name to use for the resulting files
@@ -321,14 +320,16 @@ if [ -z $path_to_dir_paired ]
 
         # Asign a name for the dir base on the reads name
         prefix=$(basename $R1_file)
-        name_for_dir="${prefix%_*}"
+        output_dir="${prefix%_*}"
 
         # RUN MAUS
-        pipeline_exec
+        create_wd $wd$output_dir &&
+        pipeline_exec 
     done
 else
     if [ -z $input_R1_file ]; then echo "ERROR => File 1 is missing"; MAUS_help; fi
     if [ -z $input_R2_file ]; then echo "ERROR => File 2 is missing"; MAUS_help; fi
+    create_wd $wd$output_dir &&
     pipeline_exec
 fi
 
