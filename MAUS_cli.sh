@@ -267,7 +267,7 @@ krona_plot (){
     echo "**** Plotting Bracken results with Krona *****"
     echo " "
     #ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"
-    $exec_path"/KrakenTools/kreport2krona.py" -r $prefix1"_"$prefix2"_bracken_families.kraken2_report" -o $wd"bracken_families.kraken2_report.krona.txt"
+    $exec_path"/KrakenTools/kreport2krona.py" -r $wd$prefix1"_"$prefix2"_bracken_families.kraken2_report" -o $wd"bracken_families.kraken2_report.krona.txt"
     ktImportText  $wd"bracken_families.kraken2_report.krona.txt" -o $wd$prefix1"_"$prefix2".krona.html"
 }
 
@@ -312,7 +312,7 @@ then
     for i in $(find $path_to_dir_paired -name *.fastq* | grep -o ".*_1\..*")
     do
         echo "running MAUS for"  $(basename $i)
-        echo "results will be saved at" $wd$output_dir
+        echo "results will be saved at" $wd
         input_R1_file=$i
         input_R2_file=$(echo "$i" | sed 's/_1\./_2\./')
 
