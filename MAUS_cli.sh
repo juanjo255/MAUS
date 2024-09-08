@@ -278,18 +278,10 @@ pipeline(){
 
 set_name_for_outfiles(){
 ## PREFIX name to use for the resulting files
-    if [ -z "$prefix1" ];
-    then 
         prefix1=$(basename $input_R1_file)
         prefix1=${prefix1%%.*}
-    fi
-
-    ## PREFIX name to use for the resulting files
-    if [ -z "$prefix2" ];
-    then 
         prefix2=$(basename $input_R2_file)
         prefix2=${prefix2%%.*}
-    fi
 }
 
 ## PIPELINE EXECUTION
