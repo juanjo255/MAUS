@@ -280,7 +280,7 @@ krona_plot (){
     ktUpdateTaxonomy.sh && \
     echo "**** Plotting Bracken results with Krona *****"
     echo " "
-    ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"  
+    ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"  -s 4
 }
 
 
