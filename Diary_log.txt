@@ -7,6 +7,12 @@ Esta parte son cosas que podria hacer en el futuro que no son demandadas por aho
 
 * REGISTROS
 
+2024-09-07
+
+* HECHO
+1. Agregué funcionalidad para que se reciba un directorio con todos los paired end analizar
+
+
 2024-06-09
 
 * HECHO
