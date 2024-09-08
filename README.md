@@ -59,11 +59,17 @@ chmod +x *
   ```
   
   ```
-    Options:
+  Usage:
+    MAUS_cli.sh [options] -1 reads_R1.fastq -2 reads_R2.fastq
+      or 
+    MAUS_cli.sh [options] -3 path/to/dir/pairedReads
+
+  Options:
     Required:
 
         -1        Input R1 paired end file. [required].
         -2        Input R2 paired end file. [required].
+        -3        Directory with R1 and R2 files. [required].
         -d        Database for Kraken2 and Bracken. if you do not have one, you need to create it first. Check flag -n and -g. [required].
 
     
@@ -91,9 +97,18 @@ chmod +x *
 * If you already have a kracken2 and a Bracken database:
   
   ```
-  ./MAUS_cli.sh -1 path/to/reads_R1.fastq[.gz] -2 path/to/reads_R2.fastq[.gz] -d path/to/database-t 14 
+  ./MAUS_cli.sh -1 $R1_file -2 $R2_file  -d path/to/database -t 32 
   ```
-
+* Otherwise it can be install with ```-n``` option
+    For example, for silva database:
+    ```
+    ./MAUS_cli.sh -n -e silva -d path/to/kraken2_silva_db -t 32 -1 $R1_file -2 $R2_file -w path/to/workingDir
+    ```
+*  If you have multiple paired-end reads you can give the directory where they are stored with ```-3```. It will look for all fastq files, It will assume that they are named the same** only different by the number before the dot referring to forward and reverse** E.g. readName_1.fastq and readName_2.fastq. All paired reads **must** follow this notation as the pipeline will look for the **_1.** and **_2.** part.
+    ```
+    ./MAUS_cli.sh -n -e silva -d path/to/kraken2_silva_db -t 32 -3 path/to/dir/pairedReads -w path/to/workingDir
+    ```
+    For each paired-end reads a folder with the results will be created using the prefix name. 
 
 ## Twitter/X
 
