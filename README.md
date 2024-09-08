@@ -5,13 +5,14 @@
 
 This pipeline is for the analysis of metagenomic Illumina sequencing.
 
-## Table of Contents
-+ [Pipeline Overview](##Pipeline_overview)
+# Table of Contents
++ [Pipeline Overview](#Pipeline-overview)
 + [Installation](#Installation)
-+ [Usage](#usage)
++ [Usage](#Usage)
++ [Usage examples](#Usage-examples)
 
 
-## Pipeline overview
+# Pipeline overview
 
 ![pipelineChart](Images/MAUS_pipeline_chart.png)
 
@@ -45,7 +46,7 @@ chmod +x *
 * The folder ```Kraken2_build```is required to be in the path 
 * MultiQC is installed with pip because it works better than conda both in Linux and MacOS
 
-## Usage intructions
+# Usage
 
 * If for any reason you got problems during taxonomy and libraries downloading, you can resume the download in this way:
 
@@ -97,7 +98,7 @@ chmod +x *
   
   ```
 
-## Quick usage
+# Usage examples
 
 * If you already have a kracken2 and a Bracken database:
   
