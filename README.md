@@ -32,7 +32,7 @@ cd MAUS
 ```
 
 **You need to replace the ```ktUpdateTaxonomy``` in your conda/mamba path for our modified version**, this modified version works with https protocol.
-Also, please add ```kraken2_build folder``` to your path and make sure it has execution permission.
+Also, please add ```kraken2_build``` to your path and make sure it has execution permission.
 ```
 # Add to path
 cp ktUpdateTaxonomy.sh $(which ktUpdateTaxonomy.sh)
