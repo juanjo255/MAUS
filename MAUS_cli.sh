@@ -316,7 +316,7 @@ then
 
         # Asign a name for the dir base on the reads name
         prefix=$(basename $input_R1_file)
-        output_dir="${prefix%_*}"
+        output_dir="${prefix%_*}/"
 
         # RUN MAUS
         set_name_for_outfiles
