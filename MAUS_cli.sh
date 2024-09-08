@@ -311,7 +311,8 @@ pipeline_exec (){
 
 ## Check if files or directory with files was given
 ## Check required files are available
-if [ -z $path_to_dir_paired ]
+if [ -z $path_to_dir_paired ];
+then
     for i in $(find $path_to_dir_paired -name *.fastq* | grep -o ".*_1\..*")
     do
         echo "running MAUS for"  $(basename $i)
