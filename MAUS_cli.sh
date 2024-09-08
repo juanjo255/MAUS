@@ -278,14 +278,14 @@ pipeline(){
 
 set_name_for_outfiles(){
 ## PREFIX name to use for the resulting files
-    if [ -z $prefix1 ];
+    if [ -z "$prefix1" ];
     then 
         prefix1=$(basename $input_R1_file)
         prefix1=${prefix1%%.*}
     fi
 
     ## PREFIX name to use for the resulting files
-    if [ -z $prefix2 ];
+    if [ -z "$prefix2" ];
     then 
         prefix2=$(basename $input_R2_file)
         prefix2=${prefix2%%.*}
@@ -297,7 +297,7 @@ pipeline_exec (){
     if [ $build_db -eq 1 ];
     then
         check_db=$(kraken2-inspect --skip-counts --threads $threads --db $kraken2_db 2> /dev/null)
-        if [ -z $check_db ];
+        if [ -z "$check_db" ];
         then
             echo "**** Building databases for kraken2 and Bracken *****"
             echo " " 
@@ -313,7 +313,7 @@ pipeline_exec (){
 
 ## Check if files or directory with files was given
 ## Check required files are available
-if ! [ -z $path_to_dir_paired ];
+if ! [ -z "$path_to_dir_paired" ];
 then
     for i in $(find $path_to_dir_paired -name *.fastq* | grep -o ".*_1\..*")
     do
@@ -331,8 +331,8 @@ then
         pipeline_exec 
     done
 else
-    if [ -z $input_R1_file ]; then echo "ERROR => File 1 is missing"; MAUS_help; fi
-    if [ -z $input_R2_file ]; then echo "ERROR => File 2 is missing"; MAUS_help; fi
+    if [ -z "$input_R1_file" ]; then echo "ERROR => File 1 is missing"; MAUS_help; fi
+    if [ -z "$input_R2_file" ]; then echo "ERROR => File 2 is missing"; MAUS_help; fi
     
     set_name_for_outfiles
     create_wd $wd$output_dir &&
