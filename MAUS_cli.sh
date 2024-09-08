@@ -71,7 +71,7 @@ MAUS_help() {
     "
     exit 1
 }
-while getopts '1:2:d:rng:e:t:w:z:pf:l:c:s:k:' opt; do
+while getopts '1:2:3:d:rng:e:t:w:z:pf:l:c:s:k:' opt; do
     case $opt in
         1)
         input_R1_file=$OPTARG
