@@ -321,8 +321,11 @@ then
         # RUN MAUS
         set_name_for_outfiles
         create_wd $wd$output_dir &&
+        keep_wd_body=$wd
         wd=$wd$output_dir
-        pipeline_exec 
+        pipeline_exec
+        wd=$keep_wd_body
+        
     done
 else
     if [ -z "$input_R1_file" ]; then echo "ERROR => File 1 is missing"; MAUS_help; fi
