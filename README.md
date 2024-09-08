@@ -5,12 +5,17 @@
 
 This pipeline is for the analysis of metagenomic Illumina sequencing.
 
+## Table of Contents
++ [Pipeline Overview](##Pipeline_overview)
++ [Installation](#Installation)
++ [Usage](#usage)
+
 
 ## Pipeline overview
 
 ![pipelineChart](Images/MAUS_pipeline_chart.png)
 
-## Installation
+# Installation
 
 It's encouraged to use a conda/mamba enviroment.
 
