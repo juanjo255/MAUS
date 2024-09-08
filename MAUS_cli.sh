@@ -318,6 +318,7 @@ then
     for i in $(find $path_to_dir_paired -name *.fastq* | grep -o ".*_1\..*")
     do
         echo "running MAUS for"  $(basename $i)
+        echo "results will be saved at" $wd$output_dir
         input_R1_file=$i
         input_R2_file=$(echo "$i" | sed 's/_1\./_2\./')
 
@@ -328,6 +329,7 @@ then
         # RUN MAUS
         set_name_for_outfiles
         create_wd $wd$output_dir &&
+        wd=$wd$output_dir
         pipeline_exec 
     done
 else
@@ -336,5 +338,6 @@ else
     
     set_name_for_outfiles
     create_wd $wd$output_dir &&
+    wd=$wd$output_dir
     pipeline_exec
 fi
