@@ -135,8 +135,6 @@ done
 ## If no option given, print help
 if [ $OPTIND -eq 1 ]; then MAUS_help; fi
 
-
-
 if [ -z $kraken2_db ]; then echo "ERROR => Kraken2 database is missing"; MAUS_help; fi
 
 ## Check if working directory has the last slash
@@ -267,10 +265,9 @@ krona_plot (){
     echo "**** Plotting Bracken results with Krona *****"
     echo " "
     #ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"
-    $exec_path"/KrakenTools/kreport2krona.py" -r $wd$prefix1"_"$prefix2"_bracken_families.kraken2_report" -o $wd"bracken_families.kraken2_report.krona.txt"
-    ktImportText  $wd"bracken_families.kraken2_report.krona.txt" -o $wd$prefix1"_"$prefix2".krona.html"
+    $exec_path"/KrakenTools/kreport2krona.py" -r $wd$prefix1"_"$prefix2".kraken2_report" -o $wd".kraken2_report.krona.txt"
+    ktImportText  $wd".kraken2_report.krona.txt" -o $wd$prefix1"_"$prefix2".krona.html"
 }
-
 
 ## PIPELINE EXECUTION ORDER
 pipeline(){
@@ -325,7 +322,7 @@ then
         keep_wd_body=$wd
         wd=$wd$output_dir
         echo "results will be saved at" $wd
-        
+
         pipeline_exec
         wd=$keep_wd_body
         
