@@ -1,5 +1,4 @@
-## options
-
+## Default Options
 wd="./MAUS_result/"
 prefix1=""
 prefix2=""
@@ -14,6 +13,20 @@ kmer_len=35
 build_db=0
 libraries="bacteria,archaea,viral,human,UniVec_Core"
 
+## Executable path
+# FIXME 
+# This part could generate problems, I am trying just to get the executable path to locate other folders
+if which MAUS_cli.sh > /dev/null 2>&1; then
+    ## This wont work for a while I guess. This is thought for a wet dream of using in anaconda or nextflow
+    exec_path=$(grep -o ".*/" $(which MAUS_cli.sh))
+else
+    if [ "$(grep -o "/" <<< $0 | wc -l)" -gt 0 ]; then
+        exec_path=$(grep -o ".*/" <<< $0)
+    else
+        exec_path="./"
+    fi
+fi
+
 
 MAUS_help() {
     echo "
@@ -24,13 +37,19 @@ MAUS_help() {
 
     Version: 0.1
 
-    Usage: MAUS_cli.sh [options] -1 reads_R1.fastq -2 reads_R2.fastq
+    Usage: 
+    MAUS_cli.sh [options] -1 reads_R1.fastq -2 reads_R2.fastq
+    or 
+    MAUS_cli.sh [options] -3 path/to/dir/pairedReads
+
+
 
     Options:
     Required:
 
         -1        Input R1 paired end file. [required].
         -2        Input R2 paired end file. [required].
+        -3        Directory with R1 and R2 files. [required].
         -d        Database for Kraken2 and Bracken. if you do not have one, you need to create it first. Check flag -n and -g. [required].
     
     Optional:
@@ -59,6 +78,9 @@ while getopts '1:2:d:rng:e:t:w:z:pf:l:c:s:k:' opt; do
         ;;
         2)
         input_R2_file=$OPTARG
+        ;;
+        3)
+        path_to_dir_paired=$OPTARG
         ;;
         d)
         kraken2_db=$OPTARG
@@ -112,9 +134,8 @@ done
 ## If no option given, print help
 if [ $OPTIND -eq 1 ]; then MAUS_help; fi
 
-## Check required files are available
-if [ -z $input_R1_file ]; then echo "ERROR => File 1 is missing"; MAUS_help; fi
-if [ -z $input_R2_file ]; then echo "ERROR => File 2 is missing"; MAUS_help; fi
+
+
 if [ -z $kraken2_db ]; then echo "ERROR => Kraken2 database is missing"; MAUS_help; fi
 
 ## Check if working directory has the last slash
@@ -264,22 +285,6 @@ krona_plot (){
 }
 
 
-## PIPELINE
-
-## Executable path
-# FIXME 
-# This part could generate problems, I am trying just to get the executable path to locate other folders
-if which MAUS_cli.sh > /dev/null 2>&1; then
-    ## This wont work for a while I guess. This is thought for a wet dream of using in anaconda or nextflow
-    exec_path=$(grep -o ".*/" $(which MAUS_cli.sh))
-else
-    if [ "$(grep -o "/" <<< $0 | wc -l)" -gt 0 ]; then
-        exec_path=$(grep -o ".*/" <<< $0)
-    else
-        exec_path="./"
-    fi
-fi
-
 ## PIPELINE EXECUTION ORDER
 pipeline(){
     create_wd $wd && fastp_filter && quality_assess_fastqc \
@@ -287,19 +292,44 @@ pipeline(){
 }
 
 ## PIPELINE EXECUTION
-if [ $build_db -eq 1 ];
-then
-    check_db=$(kraken2-inspect --skip-counts --threads $threads --db $kraken2_db 2> /dev/null)
-    if [ -z $check_db ];
+pipeline_exec (){
+    if [ $build_db -eq 1 ];
     then
-        echo "**** Building databases for kraken2 and Bracken *****"
-        echo " " 
-        kraken2_build_db && bracken_build_db && pipeline
-        
+        check_db=$(kraken2-inspect --skip-counts --threads $threads --db $kraken2_db 2> /dev/null)
+        if [ -z $check_db ];
+        then
+            echo "**** Building databases for kraken2 and Bracken *****"
+            echo " " 
+            kraken2_build_db && bracken_build_db && pipeline
+        else
+            echo "Kraken database exists. Skipping downloading"
+            pipeline
+        fi
     else
-        echo "Kraken database exists. Skipping downloading"
         pipeline
     fi
+}
+
+## Check if files or directory with files was given
+## Check required files are available
+if [ -z $path_to_dir_paired ]
+    for i in $(find $path_to_dir_paired -name *.fastq* | grep -o ".*_1\..*")
+    do
+        echo "running MAUS for"  $(basename $i)
+        R1_file=$i
+        R2_file=$(echo "$i" | sed 's/_1\./_2\./')
+
+        # Asign a name for the dir base on the reads name
+        prefix=$(basename $R1_file)
+        name_for_dir="${prefix%_*}"
+
+        # RUN MAUS
+        pipeline_exec
+    done
 else
-    pipeline
+    if [ -z $input_R1_file ]; then echo "ERROR => File 1 is missing"; MAUS_help; fi
+    if [ -z $input_R2_file ]; then echo "ERROR => File 2 is missing"; MAUS_help; fi
+    pipeline_exec
 fi
+
+
