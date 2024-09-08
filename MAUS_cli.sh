@@ -266,7 +266,9 @@ krona_plot (){
     ktUpdateTaxonomy.sh && \
     echo "**** Plotting Bracken results with Krona *****"
     echo " "
-    ktImportTaxonomy -m 4 -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"
+    #ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"
+    $exec_path"/KrakenTools/kreport2krona.py" -r $prefix1"_"$prefix2"_bracken_families.kraken2_report" -o $wd"bracken_families.kraken2_report.krona.txt"
+    ktImportText  $wd"bracken_families.kraken2_report.krona.txt" -o $wd$prefix1"_"$prefix2".krona.html"
 }
 
 
