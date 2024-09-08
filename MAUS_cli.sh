@@ -262,7 +262,7 @@ krona_plot (){
     echo "**** Setting up Krona *****"
     echo " "
     ktUpdateTaxonomy.sh && \
-    echo "**** Plotting Bracken results with Krona *****"
+    echo "**** Plotting Kraken results with Krona *****"
     echo " "
     #ktImportTaxonomy -o $wd$prefix1"_"$prefix2".krona.html" $wd$prefix1"_"$prefix2".bracken_output"
     $exec_path"/KrakenTools/kreport2krona.py" -r $wd$prefix1"_"$prefix2".kraken2_report" -o $wd".kraken2_report.krona.txt"
