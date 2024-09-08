@@ -145,20 +145,6 @@ then
     wd=$wd"/"
 fi
 
-## PREFIX name to use for the resulting files
-if [ -z $prefix1 ];
-then 
-    prefix1=$(basename $input_R1_file)
-    prefix1=${prefix1%%.*}
-fi
-
-## PREFIX name to use for the resulting files
-if [ -z $prefix2 ];
-then 
-    prefix2=$(basename $input_R2_file)
-    prefix2=${prefix2%%.*}
-fi
-
 
 #### FUNCTIONS FOR PIPELINE ####
 
@@ -290,6 +276,22 @@ pipeline(){
     && Kraken2_classification && bracken_estimation && krona_plot && alpha_diversity
 }
 
+set_name_for_outfiles(){
+## PREFIX name to use for the resulting files
+    if [ -z $prefix1 ];
+    then 
+        prefix1=$(basename $input_R1_file)
+        prefix1=${prefix1%%.*}
+    fi
+
+    ## PREFIX name to use for the resulting files
+    if [ -z $prefix2 ];
+    then 
+        prefix2=$(basename $input_R2_file)
+        prefix2=${prefix2%%.*}
+    fi
+}
+
 ## PIPELINE EXECUTION
 pipeline_exec (){
     if [ $build_db -eq 1 ];
@@ -316,22 +318,23 @@ then
     for i in $(find $path_to_dir_paired -name *.fastq* | grep -o ".*_1\..*")
     do
         echo "running MAUS for"  $(basename $i)
-        R1_file=$i
-        R2_file=$(echo "$i" | sed 's/_1\./_2\./')
+        input_R1_file=$i
+        input_R2_file=$(echo "$i" | sed 's/_1\./_2\./')
 
         # Asign a name for the dir base on the reads name
-        prefix=$(basename $R1_file)
+        prefix=$(basename $input_R1_file)
         output_dir="${prefix%_*}"
 
         # RUN MAUS
+        set_name_for_outfiles
         create_wd $wd$output_dir &&
         pipeline_exec 
     done
 else
     if [ -z $input_R1_file ]; then echo "ERROR => File 1 is missing"; MAUS_help; fi
     if [ -z $input_R2_file ]; then echo "ERROR => File 2 is missing"; MAUS_help; fi
+    
+    set_name_for_outfiles
     create_wd $wd$output_dir &&
     pipeline_exec
 fi
-
-
