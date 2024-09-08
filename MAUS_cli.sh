@@ -286,7 +286,7 @@ krona_plot (){
 
 ## PIPELINE EXECUTION ORDER
 pipeline(){
-    create_wd $wd && fastp_filter && quality_assess_fastqc \
+    fastp_filter && quality_assess_fastqc \
     && Kraken2_classification && bracken_estimation && krona_plot && alpha_diversity
 }
 
