@@ -106,7 +106,7 @@ chmod +x *
   ```
   ./MAUS_cli.sh -1 $R1_file -2 $R2_file  -d path/to/database -t 32 
   ```
-* Otherwise it can be install with ```-n``` option
+* Otherwise it can be install with ```-n``` option.
     For example, for silva database:
     ```
     ./MAUS_cli.sh -n -e silva -d path/to/kraken2_silva_db -t 32 -1 $R1_file -2 $R2_file -w path/to/workingDir
@@ -115,7 +115,13 @@ chmod +x *
     ```
     ./MAUS_cli.sh -n -e silva -d path/to/kraken2_silva_db -t 32 -3 path/to/dir/pairedReads -w path/to/workingDir
     ```
-    For each paired-end reads a folder with the results will be created using the prefix name. 
+    For each paired-end reads a folder with the results will be created using the prefix name.
+
+* If you are going to use regex use doble quotes to avoid unexpect behaviors:
+  ```
+  MAUS_cli.sh -n -e silva -d path/to/kraken2_silva_db  -t 32 -3 "Proyecto_*/" -w ./maus_out/
+  ```
+  In the above case MAUS will look for all fastq files in folders that start with **Proyecto_**
 
 ## Twitter/X
 
