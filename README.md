@@ -2,15 +2,16 @@
 
 > Metagenomic Analysis UniSeqs (MAUS)
 
-
-This pipeline is for the analysis of metagenomic Illumina sequencing.
-
 # Table of Contents
++ [About](#About)
 + [Pipeline Overview](#Pipeline-overview)
 + [Installation](#Installation)
 + [Usage](#Usage)
 + [Usage examples](#Usage-examples)
 
+# About
+
+  MAUS is a pipeline for the analysis of metagenomic Paired-end Illumina sequencing.
 
 # Pipeline overview
 
