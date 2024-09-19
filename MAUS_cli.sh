@@ -241,7 +241,7 @@ bracken_estimation (){
     echo "**** Abundance estimation with Bracken *****"
     echo " "
     bracken -d $kraken2_db -i $wd$prefix1"_"$prefix2".kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \
-        -o $wd$prefix1"_"$prefix2"_"$classification_level".bracken_output"
+        -o $wd$prefix1"_"$prefix2"."$classification_level".bracken_output"
 }
 
 ## Krona visualization of Bracken results
