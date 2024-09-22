@@ -170,7 +170,7 @@ fastp_filter (){
         echo " "
         echo "FastP options: $fastp_options"
         fastp --thread $threads -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
-            -j $wd$prefix1"_"$prefix2".html" -h $wd$prefix1"_"$prefix2".json"
+            -j $wd$prefix1"_"$prefix2".json" -h $wd$prefix1"_"$prefix2".html"
         
         # Use the filtered reads in the rest of the pipeline
         input_R1_file=$wd$prefix1".filt.fastq"
