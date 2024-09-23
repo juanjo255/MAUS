@@ -252,7 +252,7 @@ alpha_diversity (){
     for i in "Sh" "BP" "Si" "ISi" "F"
     do 
         $exec_path"/KrakenTools/DiversityTools/alpha_diversity.py" \
-        --filename  $wd$prefix1"_"$prefix2".bracken_output" --alpha $i >> $wd$prefix1"_"$prefix2".alphaDiversity.tsv"
+        --filename  $wd$prefix1"_"$prefix2"."$classification_level".bracken_output" --alpha $i >> $wd$prefix1"_"$prefix2".alphaDiversity.tsv"
     done 
 }
 
