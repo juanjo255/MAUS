@@ -168,7 +168,6 @@ fastp_filter (){
         echo " "
         echo "**** Quality filter with fastp *****"
         echo " "
-        
         merge_mode=$(echo $fastp_options | grep -Ewo -- "-m|--merge")
         ## Modify fastp options
         ## This is because in merge mode I need an extra file for each reads
@@ -192,6 +191,7 @@ fastp_filter (){
             input_R2_file=$wd$prefix2".filt.fastq"
         fi
         fastp_options=$fastp_options_backup
+    fi
 }
 
 quality_assess_fastqc(){
