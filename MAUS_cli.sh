@@ -170,22 +170,27 @@ fastp_filter (){
         echo " "
         
         merge_mode=$(echo $fastp_options | grep -Ewo -- "-m|--merge")
+        ## Modify fastp options
+        ## This is because in merge mode I need an extra file for each reads
+        ## The pipeline is for looping through several files so I need to make a file for each new paired-end
         if ! [ -z "$merge_mode" ];then
             fastp_options_backup=$fastp_options
             fastp_options="$fastp_options --merge_out $wd$prefix1.merge.fastq"
-            ## Use the merged reads
+        fi
+
+        echo "FastP options: $fastp_options"
+        fastp --thread $threads $fastp_options -i $input_R1_file -I $input_R2_file -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
+            -j $wd$prefix1".json" -h $wd$prefix1".html"
+        fastp_options=$fastp_options_backup
+           
+        if ! [ -z "$merge_mode" ];then
+           ## Use the merged reads
             input_R1_file=$wd$prefix1".merge.fastq"
             input_R2_file=""
         else
             # Use the filtered reads in the rest of the pipeline
             input_R1_file=$wd$prefix1".filt.fastq"
             input_R2_file=$wd$prefix2".filt.fastq"
-        fi
-        echo "FastP options: $fastp_options"
-        fastp --thread $threads $fastp_options -i $input_R1_file -I $input_R2_file -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
-            -j $wd$prefix1".json" -h $wd$prefix1".html"
-        fastp_options=$fastp_options_backup
-       
     fi
 }
 
