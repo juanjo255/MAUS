@@ -169,12 +169,23 @@ fastp_filter (){
         echo "**** Quality filter with fastp *****"
         echo " "
         echo "FastP options: $fastp_options"
-        fastp --thread $threads -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
+        merge_mode=$(echo $fastp_options | grep -o "-m|--merge")
+        if ![ -z $merge_mode ];then
+            fastp_options="$fastp_options --merge_out $wd$prefix1.merge.fastq"
+            ## Use the merged reads
+            input_R1_file=$wd$prefix1".merge.fastq"
+            input_R2_file=""
+
+        else
+            # Use the filtered reads in the rest of the pipeline
+            input_R1_file=$wd$prefix1".filt.fastq"
+            input_R2_file=$wd$prefix2".filt.fastq"
+        fi
+
+        fastp --thread $threads $fastp_options -i $input_R1_file -I $input_R2_file -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
             -j $wd$prefix1".json" -h $wd$prefix1".html"
         
-        # Use the filtered reads in the rest of the pipeline
-        input_R1_file=$wd$prefix1".filt.fastq"
-        input_R2_file=$wd$prefix2".filt.fastq"
+       
     fi
 }
 
@@ -232,7 +243,7 @@ Kraken2_classification (){
     echo "**** Read classification with Kraken2 *****"
     echo " "
     kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1".kraken2_report" --report-minimizer-data \
-        --output $wd$prefix1".kraken2_output" $input_R1_file $input_R2_file 
+        --outpkrakeut $wd$prefix1".kraken2_output" $input_R1_file $input_R2_file 
 }
 
 ## Bracken abundance estimation
