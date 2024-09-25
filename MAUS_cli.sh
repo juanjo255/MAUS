@@ -248,7 +248,7 @@ Kraken2_classification (){
     echo "**** Read classification with Kraken2 *****"
     echo " "
     kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1".kraken2_report" --report-minimizer-data \
-        --outpkrakeut $wd$prefix1".kraken2_output" $input_R1_file $input_R2_file 
+        --output $wd$prefix1".kraken2_output" $input_R1_file $input_R2_file 
 }
 
 ## Bracken abundance estimation
