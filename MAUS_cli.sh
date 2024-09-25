@@ -169,8 +169,8 @@ fastp_filter (){
         echo "**** Quality filter with fastp *****"
         echo " "
         echo "FastP options: $fastp_options"
-        merge_mode=$(echo $fastp_options | grep -o "-m|--merge")
-        if ![ -z $merge_mode ];then
+        merge_mode=$(echo $fastp_options | grep -Ewo -- "-m|--merge")
+        if ![ -z "$merge_mode" ];then
             fastp_options="$fastp_options --merge_out $wd$prefix1.merge.fastq"
             ## Use the merged reads
             input_R1_file=$wd$prefix1".merge.fastq"
