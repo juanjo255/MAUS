@@ -1,4 +1,0 @@
-shannon	5
-simpson	3.5
-shannon	3
-simpson	2.5
