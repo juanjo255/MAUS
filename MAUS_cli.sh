@@ -170,7 +170,7 @@ fastp_filter (){
         echo " "
         echo "FastP options: $fastp_options"
         fastp --thread $threads -i $input_R1_file -I $input_R2_file $fastp_options -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
-            -j $wd$prefix1.json" -h $wd$prefix1.html"
+            -j $wd$prefix1".json" -h $wd$prefix1".html"
         
         # Use the filtered reads in the rest of the pipeline
         input_R1_file=$wd$prefix1".filt.fastq"
@@ -231,8 +231,8 @@ Kraken2_classification (){
     echo " "
     echo "**** Read classification with Kraken2 *****"
     echo " "
-    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1.kraken2_report" --report-minimizer-data \
-        --output $wd$prefix1.kraken2_output" $input_R1_file $input_R2_file 
+    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1".kraken2_report" --report-minimizer-data \
+        --output $wd$prefix1".kraken2_output" $input_R1_file $input_R2_file 
 }
 
 ## Bracken abundance estimation
@@ -240,8 +240,8 @@ bracken_estimation (){
     echo " "
     echo "**** Abundance estimation with Bracken *****"
     echo " "
-    bracken -d $kraken2_db -i $wd$prefix1.kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \
-        -o $wd$prefix1."$classification_level".bracken_output"
+    bracken -d $kraken2_db -i "$wd$prefix1.kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \
+        -o "$wd$prefix1.$classification_level.bracken_output"
 }
 
 ## Krona visualization of Bracken results
@@ -252,7 +252,7 @@ alpha_diversity (){
     for i in "Sh" "BP" "Si" "ISi" "F"
     do 
         $exec_path"/KrakenTools/DiversityTools/alpha_diversity.py" \
-        --filename  $wd$prefix1."$classification_level".bracken_output" --alpha $i >> $wd$prefix1.alphaDiversity.tsv"
+        --filename  $wd$prefix1"."$classification_level".bracken_output" --alpha $i >> $wd$prefix1".alphaDiversity.tsv"
     done 
 }
 
@@ -265,8 +265,8 @@ krona_plot (){
     echo "**** Plotting Kraken results with Krona *****"
     echo " "
     #ktImportTaxonomy -o $wd$prefix1.krona.html" $wd$prefix1.bracken_output"
-    $exec_path"/KrakenTools/kreport2krona.py" -r $wd$prefix1.kraken2_report" -o $wd".kraken2_report.krona.txt"
-    ktImportText  $wd".kraken2_report.krona.txt" -o $wd$prefix1.krona.html"
+    $exec_path"/KrakenTools/kreport2krona.py" -r $wd$prefix1".kraken2_report" -o $wd".kraken2_report.krona.txt"
+    ktImportText  $wd".kraken2_report.krona.txt" -o $wd$prefix1".krona.html"
 }
 
 ## PIPELINE EXECUTION ORDER
