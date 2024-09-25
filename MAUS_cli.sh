@@ -35,6 +35,8 @@ MAUS_help() {
 
     Author:
     Juan Picon Cossio
+    Jhoanna Tejada Moreno
+    Gustavo Gámez de las Armas
 
     Version: 0.1
 
