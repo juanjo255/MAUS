@@ -181,7 +181,6 @@ fastp_filter (){
         echo "FastP options: $fastp_options"
         fastp --thread $threads $fastp_options -i $input_R1_file -I $input_R2_file -o $wd$prefix1".filt.fastq" -O $wd$prefix2".filt.fastq" \
             -j $wd$prefix1".json" -h $wd$prefix1".html"
-        fastp_options=$fastp_options_backup
            
         if ! [ -z "$merge_mode" ];then
            ## Use the merged reads
@@ -191,7 +190,8 @@ fastp_filter (){
             # Use the filtered reads in the rest of the pipeline
             input_R1_file=$wd$prefix1".filt.fastq"
             input_R2_file=$wd$prefix2".filt.fastq"
-    fi
+        fi
+        fastp_options=$fastp_options_backup
 }
 
 quality_assess_fastqc(){
