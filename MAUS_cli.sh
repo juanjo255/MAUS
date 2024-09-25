@@ -174,7 +174,7 @@ fastp_filter (){
         ## The pipeline is for looping through several files so I need to make a file for each new paired-end
         if ! [ -z "$merge_mode" ];then
             fastp_options_backup=$fastp_options
-            fastp_options="$fastp_options --merge_out $wd$prefix1.merge.fastq"
+            fastp_options="$fastp_options --merged_out $wd$prefix1.merged.fastq"
         fi
 
         echo "FastP options: $fastp_options"
@@ -183,7 +183,7 @@ fastp_filter (){
            
         if ! [ -z "$merge_mode" ];then
            ## Use the merged reads
-            input_R1_file=$wd$prefix1".merge.fastq"
+            input_R1_file=$wd$prefix1".merged.fastq"
             input_R2_file=""
         else
             # Use the filtered reads in the rest of the pipeline
