@@ -294,8 +294,12 @@ bracken_estimation (){
     echo " "
     echo "**** Abundance estimation with Bracken *****"
     echo " "
-    bracken -d $kraken2_db -i "$wd$prefix1.kraken2_report" -r $read_len -l $classification_level -t $threshold_abundance \
-        -o "$wd$prefix1.$classification_level.bracken_output"
+    IFS="," read -a tax_lvls <<< "$classification_level"
+    for tax_level in "${tax_lvls}";
+    do
+        bracken -d $kraken2_db -i "$wd$prefix1.kraken2_report" -r $read_len -l $tax_level -t $threshold_abundance \
+            -o "$wd$prefix1.$tax_level.bracken_output"
+    done
 }
 
 ## Krona visualization of Bracken results
@@ -306,7 +310,7 @@ alpha_diversity (){
     for i in "Sh" "BP" "Si" "ISi" "F"
     do 
         $exec_path"/KrakenTools/DiversityTools/alpha_diversity.py" \
-        --filename  $wd$prefix1"."$classification_level".bracken_output" --alpha $i >> $wd$prefix1".alphaDiversity.tsv"
+        --filename  $wd$prefix1"."$tax_level".bracken_output" --alpha $i >> $wd$prefix1".alphaDiversity.tsv"
     done 
 }
 
