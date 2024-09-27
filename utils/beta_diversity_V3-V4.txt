@@ -1,13 +1,13 @@
-#0	G1_1/G1_1_1.G.bracken_output (89335 reads)
-#1	G2_1/G2_1_1.G.bracken_output (120400 reads)
-#2	G3_1/G3_1_1.G.bracken_output (75039 reads)
-#3	G4_1/G4_1_1.G.bracken_output (132788 reads)
-#4	G5_1/G5_1_1.G.bracken_output (111763 reads)
-#5	G6_1/G6_1_1.G.bracken_output (110051 reads)
+#0	G1_1/G1_1_1.G.bracken_output (153348 reads)
+#1	G2_1/G2_1_1.G.bracken_output (157176 reads)
+#2	G3_1/G3_1_1.G.bracken_output (97811 reads)
+#3	G4_1/G4_1_1.G.bracken_output (168501 reads)
+#4	G5_1/G5_1_1.G.bracken_output (148179 reads)
+#5	G6_1/G6_1_1.G.bracken_output (145173 reads)
 x	0	1	2	3	4	5
-0	0.000	0.439	0.705	0.589	0.504	0.649
-1	x.xxx	0.000	0.702	0.580	0.471	0.676
-2	x.xxx	x.xxx	0.000	0.590	0.583	0.564
-3	x.xxx	x.xxx	x.xxx	0.000	0.420	0.483
-4	x.xxx	x.xxx	x.xxx	x.xxx	0.000	0.403
+0	0.000	0.353	0.722	0.589	0.446	0.649
+1	x.xxx	0.000	0.704	0.579	0.454	0.656
+2	x.xxx	x.xxx	0.000	0.575	0.576	0.550
+3	x.xxx	x.xxx	x.xxx	0.000	0.407	0.464
+4	x.xxx	x.xxx	x.xxx	x.xxx	0.000	0.386
 5	x.xxx	x.xxx	x.xxx	x.xxx	x.xxx	0.000
