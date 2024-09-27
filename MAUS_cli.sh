@@ -215,6 +215,8 @@ fastp_filter (){
            ## I do it in this way because I am fcking lazy
            ## and this was created a lot after most of the pipeline were built
            ## To avoid creating more varibles I will keep the same ones
+            input_R1_file=$wd$prefix1".filt.fastq"
+            input_R2_file=$wd$prefix2".filt.fastq"
             concat_paired_end $wd$prefix1".concat.fastq"
             input_R1_file=$wd$prefix1".merged.fastq"
             input_R2_file=$wd$prefix1".concat.fastq"
