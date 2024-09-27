@@ -187,7 +187,9 @@ concat_paired_end(){
     }
     }' >> $1
 
-    echo "Paired-end reads concatenated and written to $1"
+    echo ""
+    num_reads=$(cat $1 | grep -c "^@")
+    echo "{$num_reads} Paired-end reads concatenated and written to $1"
 }
 
 ## FastP filtering
