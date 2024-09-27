@@ -8,6 +8,7 @@
 + [Installation](#Installation)
 + [Usage](#Usage)
 + [Usage examples](#Usage-examples)
++ [Keep in mind](#Keep-in-mind)
 
 # About
 
@@ -123,6 +124,11 @@ chmod +x *
   ```
   In the above case MAUS will look for all fastq files in folders that start with **Proyecto_**
 
+# Keep in mind
+
+1. If reads are merged with fastp, reads must be in order! fastp do it, but just in case. Since a simple script in bash will concat first record in R1 with first record in R2 and so on for Kraken2 procesing along with the merged reads.
+
+# Social media
 ## Twitter/X
 
 [@Juanpicon255](https://x.com/Juanpicon255)
