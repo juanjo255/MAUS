@@ -163,6 +163,33 @@ create_wd (){
     fi
 }
 
+concat_paired_end(){
+    # here R1 and R2 files are concat for kraken2 in this way:
+    # @R1 header
+    # sequenceR1xsequenceR2
+    if [ ${input_R1_file: -2} = "gz" ];
+    then 
+        cmd="zcat"
+    else
+        cmd="cat"
+    fi
+
+    paste <($cmd "$input_R1_file") <($cmd "$input_R2_file") | awk '{
+    if (NR % 4 == 1) {  # Header lines
+        print $1;
+    } else if (NR % 4 == 2) {  # Sequence lines
+        print $1 "x" $2
+    }
+      else if (NR % 4 == 3) {  # + lines
+                print $1;
+    } else if (NR % 4 == 0) {  # Quality lines
+        print $1  $2;
+    }
+    }' >> $1
+
+    echo "Paired-end reads concatenated and written to $1"
+}
+
 ## FastP filtering
 fastp_filter (){
     if [ $deactivate_fastp -eq 0 ];
@@ -184,9 +211,13 @@ fastp_filter (){
             -j $wd$prefix1".json" -h $wd$prefix1".html"
            
         if ! [ -z "$merge_mode" ];then
-           ## Use the merged reads
+           ## Use the merged reads and concat unmerged for kraken2
+           ## I do it in this way because I am fcking lazy
+           ## and this was created a lot after most of the pipeline were built
+           ## To avoid creating more varibles I will keep the same ones
+            concat_paired_end $wd$prefix1".concat.fastq"
             input_R1_file=$wd$prefix1".merged.fastq"
-            input_R2_file=""
+            input_R2_file=$wd$prefix1".concat.fastq"
         else
             # Use the filtered reads in the rest of the pipeline
             input_R1_file=$wd$prefix1".filt.fastq"
