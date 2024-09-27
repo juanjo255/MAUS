@@ -67,7 +67,7 @@ MAUS_help() {
         -p        Deactivate FastP. Adding this option will deactivate FastP filtering [False]
         -f        FastP options. [\" \"].
         -l        Read length (Bracken). [100].
-        -c        Classification level (Bracken) [options: D,P,C,O,F,G,S,S1,etc]. [F]
+        -c        Classification level (Bracken). It can be 1 level or several separated by comma [options: D,P,C,O,F,G,S]. [F] or [P,F,G]
         -s        Threshold before abundance estimation (Bracken). [0].
         -k        kmer length. (Kraken2,Bracken).[35]
         *         Help.
