@@ -295,7 +295,7 @@ bracken_estimation (){
     echo "**** Abundance estimation with Bracken *****"
     echo " "
     IFS="," read -a tax_lvls <<< "$classification_level"
-    for tax_level in "${tax_lvls}";
+    for tax_level in "${tax_lvls[@]}";
     do
         bracken -d $kraken2_db -i "$wd$prefix1.kraken2_report" -r $read_len -l $tax_level -t $threshold_abundance \
             -o "$wd$prefix1.$tax_level.bracken_output"
