@@ -176,7 +176,7 @@ concat_paired_end(){
 
     paste <($cmd "$input_R1_file") <($cmd "$input_R2_file") | awk '{
     if (NR % 4 == 1) {  # Header lines
-        print $1;
+        print $1 "x" $2;
     } else if (NR % 4 == 2) {  # Sequence lines
         print $1 "x" $2
     }
