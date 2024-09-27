@@ -224,6 +224,7 @@ fastp_filter (){
             input_R2_file=$wd$prefix1".concat.fastq"
         else
             # Use the filtered reads in the rest of the pipeline
+            paired_flag_kraken2="--paired"
             input_R1_file=$wd$prefix1".filt.fastq"
             input_R2_file=$wd$prefix2".filt.fastq"
         fi
@@ -284,7 +285,7 @@ Kraken2_classification (){
     echo " "
     echo "**** Read classification with Kraken2 *****"
     echo " "
-    kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1".kraken2_report" --report-minimizer-data \
+    kraken2 $paired_flag_kraken2 --threads $threads --db $kraken2_db --report $wd$prefix1".kraken2_report" --report-minimizer-data \
         --output $wd$prefix1".kraken2_output" $input_R1_file $input_R2_file 
 }
 
