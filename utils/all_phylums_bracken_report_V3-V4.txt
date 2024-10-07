@@ -1,0 +1,104 @@
+#Number of Samples: 6
+#Total Number of Reads: 3268
+#G1_1	G1_1/G1_1_1_bracken_phylums.kraken2_report
+#G2_1	G2_1/G2_1_1_bracken_phylums.kraken2_report
+#G3_1	G3_1/G3_1_1_bracken_phylums.kraken2_report
+#G4_1	G4_1/G4_1_1_bracken_phylums.kraken2_report
+#G5_1	G5_1/G5_1_1_bracken_phylums.kraken2_report
+#G6_1	G6_1/G6_1_1_bracken_phylums.kraken2_report
+#perc	tot_all	tot_lvl	G1_1_all	G1_1_lvl	G2_1_all	G2_1_lvl	G3_1_all	G3_1_lvl	G4_1_all	G4_1_lvl	G5_1_all	G5_1_lvl	G6_1_all	G6_1_lvl	lvl_type	taxid	name
+0.0000	0	0	0	0	0	0	0	0	0	0	0	0	0	0	U	0	unclassified
+33143.4823	1083129	0	191559	0	192636	0	152425	0	183161	0	181968	0	181380	0	R	1	root
+29318.4823	958128	0	165215	0	145619	0	148436	0	174354	0	160144	0	164360	0	D	3	  Bacteria
+10096.0220	329938	0	31661	0	17883	0	60842	0	97048	0	57803	0	64701	0	P	2375	    Proteobacteria
+9741.3403	318347	0	65960	0	77651	0	59592	0	23928	0	43775	0	47441	0	P	1672	    Firmicutes
+2249.0514	73499	0	13939	0	15721	0	2995	0	18034	0	16685	0	6125	0	P	1385	    Chloroflexi
+1504.8348	49178	0	18731	0	7382	0	4432	0	4198	0	8111	0	6324	0	P	43868	    Bacteroidota
+1496.4504	48904	0	16269	0	3765	0	4678	0	7025	0	8256	0	8911	0	P	43279	    Actinobacteriota
+1138.4333	37204	0	5496	0	7930	0	563	0	9867	0	6645	0	6703	0	P	46698	    Verrucomicrobiota
+863.2497	28211	0	1259	0	1500	0	652	0	6722	0	2899	0	15179	0	P	46635	    Synergistota
+842.0747	27519	0	213	0	5694	0	11734	0	4511	0	3053	0	2314	0	P	1500	    Cyanobacteria
+434.4859	14199	0	3445	0	5063	0	823	0	962	0	3107	0	799	0	P	44898	    Desulfobacterota
+239.8715	7839	0	16	0	88	0	1134	0	235	0	2646	0	3720	0	P	50044	    Campylobacterota
+168.4823	5506	0	4270	0	296	0	127	0	250	0	417	0	146	0	P	43177	    Acidobacteriota
+130.8140	4275	0	971	0	293	0	127	0	123	0	2177	0	584	0	P	46587	    Spirochaetota
+117.3195	3834	0	225	0	804	0	64	0	294	0	2274	0	173	0	P	45093	    Elusimicrobiota
+56.4565	1845	0	1110	0	86	0	113	0	246	0	171	0	119	0	P	45909	    Myxococcota
+49.2656	1610	1610	399	399	519	519	70	70	129	129	405	405	88	88	P	46586	    SAR324 clade(Marine group B)
+40.4835	1323	1323	425	425	401	401	74	74	44	44	334	334	45	45	P	45896	    MBNT15
+33.8433	1106	0	153	0	202	0	15	0	141	0	557	0	38	0	P	46016	    Planctomycetota
+24.3574	796	0	237	0	46	0	51	0	158	0	103	0	201	0	P	44430	    Bdellovibrionota
+14.5349	475	0	84	0	13	0	48	0	88	0	116	0	126	0	P	25752	    Patescibacteria
+12.1481	397	0	104	0	16	0	14	0	18	0	229	0	16	0	P	45873	    Gemmatimonadota
+10.1591	332	0	2	0	11	0	97	0	28	0	36	0	158	0	P	44864	    Deferribacterota
+9.5777	313	0	40	0	104	0	6	0	27	0	60	0	76	0	P	44462	    Caldisericota
+7.0991	232	0	106	0	1	0	5	0	35	0	26	0	59	0	P	43853	    Armatimonadota
+5.2020	170	0	16	0	36	0	14	0	20	0	34	0	50	0	P	11400	    Hydrogenedentes
+5.0184	164	164	22	22	13	13	10	10	41	41	51	51	27	27	P	27010	    WPS-2
+4.1922	137	0	12	0	5	0	118	0	0	0	0	0	2	0	P	44881	    Deinococcota
+3.2130	105	0	7	0	20	0	1	0	16	0	24	0	37	0	P	46628	    Sumerlaeota
+2.7540	90	0	0	0	3	0	0	0	9	0	70	0	8	0	P	45116	    Fibrobacterota
+2.7234	89	0	3	0	23	0	13	0	28	0	13	0	9	0	P	25541	    Dependentiae
+1.8972	62	62	1	1	1	1	2	2	12	12	0	0	46	46	P	14741	    WS1
+1.8360	60	0	2	0	2	0	1	0	24	0	8	0	23	0	P	25727	    Modulibacteria
+1.4076	46	0	1	0	16	0	2	0	10	0	12	0	5	0	P	44456	    Caldatribacteriota
+1.0404	34	0	1	0	1	0	1	0	20	0	3	0	8	0	P	45985	    Nitrospirota
+0.9180	30	4	0	0	3	0	2	0	12	0	4	4	9	0	P	45891	    Latescibacterota
+0.7344	24	0	3	0	5	0	2	0	4	0	4	0	6	0	P	44537	    Cloacimonadota
+0.7038	23	0	1	0	3	0	1	0	14	0	2	0	2	0	P	45855	    Fusobacteriota
+0.6120	20	20	7	7	6	6	3	3	0	0	2	2	2	2	P	46585	    Rs-K70 termite group
+0.5508	18	18	0	0	0	0	0	0	3	3	7	7	8	8	P	25726	    Margulisbacteria
+0.4284	14	0	4	0	2	0	3	0	1	0	3	0	1	0	P	46669	    Thermotogota
+0.3672	12	0	2	0	0	0	0	0	1	0	0	0	9	0	P	43172	    Abditibacteriota
+0.3366	11	0	0	0	0	0	0	0	0	0	1	0	10	0	P	44471	    Calditrichota
+0.2754	9	9	3	3	3	3	0	0	0	0	0	0	3	3	P	46634	    Sva0485
+0.2448	8	0	1	0	0	0	0	0	0	0	0	0	7	0	P	45897	    Methylomirabilota
+0.2142	7	7	0	0	0	0	0	0	1	1	2	2	4	4	P	25550	    Edwardsbacteria
+0.2142	7	7	0	0	0	0	0	0	2	2	0	0	5	5	P	11409	    Marinimicrobia (SAR406 clade)
+0.2142	7	7	0	0	1	1	0	0	4	4	0	0	2	2	P	27012	    Zixibacteria
+0.2142	7	0	0	0	1	0	1	0	4	0	0	0	1	0	P	25682	    Halanaerobiaeota
+0.1530	5	5	0	0	0	0	0	0	1	1	0	0	4	4	P	14408	    GN01
+0.1530	5	5	2	2	0	0	0	0	1	1	2	2	0	0	P	45974	    NB1-j
+0.1224	4	4	0	0	0	0	0	0	1	1	0	0	3	3	P	25706	    Hydrothermae
+0.0918	3	3	0	0	0	0	1	1	1	1	1	1	0	0	P	46584	    RCP2-54
+0.0918	3	3	1	1	0	0	0	0	0	0	2	2	0	0	P	27011	    WS4
+0.0612	2	0	0	0	0	0	0	0	0	0	0	0	2	0	P	25537	    Dadabacteria
+0.0612	2	0	0	0	0	0	0	0	0	0	1	0	1	0	P	45976	    Nitrospinota
+0.0306	1	0	0	0	0	0	0	0	0	0	0	0	1	0	P	45112	    Fermentibacterota
+0.0306	1	1	0	0	0	0	0	0	0	0	0	0	1	1	P	904	    BHI80-139
+0.0306	1	1	0	0	0	0	0	0	0	0	0	0	1	1	P	25101	    CK-2C2-2
+0.0306	1	1	0	0	0	0	0	0	0	0	0	0	1	1	P	14501	    Poribacteria
+0.0306	1	1	0	0	0	0	0	0	0	0	1	1	0	0	P	26898	    Schekmanbacteria
+0.0306	1	0	0	0	0	0	0	0	0	0	1	0	0	0	P	44876	    Deferrisomatota
+0.0306	1	1	0	0	0	0	0	0	1	1	0	0	0	0	P	27013	    uncultured
+0.0306	1	1	0	0	0	0	0	0	1	1	0	0	0	0	P	27009	    WOR-1
+0.0306	1	0	0	0	0	0	1	0	0	0	0	0	0	0	P	44555	    Coprothermobacterota
+0.0306	1	0	0	0	1	0	0	0	0	0	0	0	0	0	P	43828	    Aquificota
+0.0306	1	1	1	1	0	0	0	0	0	0	0	0	0	0	P	24572	    AncK6
+0.0306	1	0	1	0	0	0	0	0	0	0	0	0	0	0	P	25560	    Entotheonellaeota
+3824.6022	124988	0	26338	0	47015	0	3989	0	8807	0	21823	0	17016	0	D	2	  Archaea
+3043.1151	99449	0	22340	0	39174	0	3062	0	5227	0	16272	0	13374	0	P	42963	    Halobacterota
+569.6144	18615	0	3009	0	5816	0	502	0	3528	0	4556	0	1204	0	P	43131	    Thermoplasmatota
+211.1383	6900	0	984	0	2015	0	423	0	51	0	991	0	2436	0	P	55	    Euryarchaeota
+0.2754	9	0	0	0	8	0	0	0	1	0	0	0	0	0	P	6	    Crenarchaeota
+0.1836	6	0	2	0	1	0	0	0	0	0	3	0	0	0	P	11084	    Aenigmarchaeota
+0.0612	2	0	1	0	0	0	0	0	0	0	1	0	0	0	P	267	    Nanoarchaeota
+0.0306	1	0	0	0	0	0	1	0	0	0	0	0	0	0	P	43107	    Micrarchaeota
+0.0306	1	0	0	0	1	0	0	0	0	0	0	0	0	0	P	43103	    Iainarchaeota
+0.0306	1	0	1	0	0	0	0	0	0	0	0	0	0	0	P	24368	    Hydrothermarchaeota
+0.3672	12	0	6	0	1	0	0	0	0	0	1	0	4	0	D	4	  Eukaryota
+0.2754	9	0	6	0	0	0	0	0	0	0	1	0	2	0	D1	46848	    Amorphea
+0.2754	9	0	6	0	0	0	0	0	0	0	1	0	2	0	D2	46957	      Obazoa
+0.2754	9	0	6	0	0	0	0	0	0	0	1	0	2	0	D3	46958	        Opisthokonta
+0.2754	9	0	6	0	0	0	0	0	0	0	1	0	2	0	D	47567	          Nucletmycea
+0.2754	9	0	6	0	0	0	0	0	0	0	1	0	2	0	K	47572	            Fungi
+0.2754	9	0	6	0	0	0	0	0	0	0	1	0	2	0	K1	47666	              Dikarya
+0.2448	8	8	5	5	0	0	0	0	0	0	1	1	2	2	P	47667	                Ascomycota
+0.0306	1	1	1	1	0	0	0	0	0	0	0	0	0	0	P	48920	                Basidiomycota
+0.0612	2	0	0	0	0	0	0	0	0	0	0	0	2	0	D1	6228	    Excavata
+0.0612	2	0	0	0	0	0	0	0	0	0	0	0	2	0	D2	6302	      Metamonada
+0.0612	2	0	0	0	0	0	0	0	0	0	0	0	2	0	P	6311	        Parabasalia
+0.0306	1	0	0	0	1	0	0	0	0	0	0	0	0	0	D1	4152	    Archaeplastida
+0.0306	1	0	0	0	1	0	0	0	0	0	0	0	0	0	K	4153	      Chloroplastida
+0.0306	1	0	0	0	1	0	0	0	0	0	0	0	0	0	K1	4154	        Charophyta
+0.0306	1	1	0	0	1	1	0	0	0	0	0	0	0	0	P	4161	          Phragmoplastophyta
